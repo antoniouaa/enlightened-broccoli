@@ -1,5 +1,7 @@
-# Node
 **/node_modules
-
-# Poetry
 **/poetry.lock
+**/package-lock.json
+
+# Cached artefacts
+**/.pytest_cache
+**/__pycache__
