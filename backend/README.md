@@ -9,3 +9,15 @@ After that,
 ```sh
 poetry install
 ```
+
+### Run locally
+
+```sh
+poetry run uvicorn brocolli:app
+```
+
+### Testing
+
+```sh
+poetry run pytest -vvv
+```
