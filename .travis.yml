@@ -1,0 +1,29 @@
+language: python
+python:
+  - 3.6
+
+env:
+  global:
+    - PGPORT=5432
+
+services:
+  - postgresql
+
+before_install:
+  - sudo apt update
+  - curl -OsSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
+  - python get-poetry.py --preview -y
+  - export PATH=$PATH:~/.poetry/bin
+  - poetry update
+  - poetry install
+
+before_script:
+  - psql --version
+  - pql -c 'CREATE DATABASE broccoli;' -U postgres
+
+script:
+  - poetry run black .
+  - poetry run pytest --cov=broccoli tests/
+
+after_success:
+  - coveralls
