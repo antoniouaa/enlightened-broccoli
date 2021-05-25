@@ -21,6 +21,7 @@ install:
 before_script:
   - psql --version
   - psql -c 'CREATE DATABASE broccoli;' -U postgres
+  - cd backend
 
 script:
   - poetry run black .

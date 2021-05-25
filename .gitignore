@@ -8,3 +8,6 @@
 
 # Env files
 **/.env
+
+# coverage
+**/.coverage
