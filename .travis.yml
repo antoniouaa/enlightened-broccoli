@@ -15,6 +15,7 @@ before_install:
   - poetry --version
 
 install:
+  - cd backend
   - poetry install -vvv
 
 before_script:
