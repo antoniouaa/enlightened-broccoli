@@ -11,11 +11,11 @@ services:
 
 before_install:
   - sudo apt update
-  - curl -OsSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-  - python get-poetry.py --preview -y
-  - export PATH=$PATH:~/.poetry/bin
-  - poetry update
-  - poetry install
+  - pip install poetry
+  - poetry --version
+
+install:
+  - poetry install -vvv
 
 before_script:
   - psql --version
