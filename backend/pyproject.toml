@@ -6,7 +6,7 @@ authors = ["antoniouaa <antoniouaa@hotmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.2"
 fastapi = "^0.65.1"
 uvicorn = "^0.13.4"
 SQLAlchemy = "^1.4.15"
@@ -22,6 +22,7 @@ requests = "^2.25.1"
 psycopg2-binary = "^2.8.6"
 pytest-cov = "^2.12.0"
 coveralls = "^3.0.1"
+black = "^21.5b1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
