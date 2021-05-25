@@ -20,7 +20,7 @@ install:
 
 before_script:
   - psql --version
-  - pql -c 'CREATE DATABASE broccoli;' -U postgres
+  - psql -c 'CREATE DATABASE broccoli;' -U postgres
 
 script:
   - poetry run black .
