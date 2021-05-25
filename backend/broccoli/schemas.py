@@ -6,7 +6,7 @@ from pydantic import BaseModel, StrictStr
 
 class ItemBase(BaseModel):
     title: str
-    description: Optional[StrictStr] = None
+    description: Optional[StrictStr] = "No description available."
     calories: int
 
 
