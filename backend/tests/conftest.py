@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from broccoli import app
+from broccoli.app import app
 from broccoli.db import Base, get_db
 
 dotenv.load_dotenv()
