@@ -1,11 +1,13 @@
+import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, StrictStr
 
 
 class ItemBase(BaseModel):
     title: str
-    description: Optional[str] = None
+    description: Optional[StrictStr] = None
+    calories: int
 
 
 class ItemCreate(ItemBase):
@@ -26,6 +28,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+    created_at: datetime.datetime
 
 
 class User(UserBase):

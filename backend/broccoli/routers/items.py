@@ -1,7 +1,7 @@
 from typing import List
 
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from broccoli import operations, schemas
 from broccoli.db import get_db
