@@ -23,8 +23,8 @@ test_items = [
 ]
 
 test_users = [
-    {"username": "testuser1", "email": "testuser1@mail.com", "password": "sample1"},
-    {"username": "testuser2", "email": "testuser2@mail.com", "password": "sample2"},
+    {"username": "john", "email": "john@mail.com", "password": "sample1"},
+    {"username": "jane", "email": "jane@mail.com", "password": "sample2"},
 ]
 
 

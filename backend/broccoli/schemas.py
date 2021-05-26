@@ -5,7 +5,7 @@ from pydantic import BaseModel, StrictStr
 
 
 class ItemBase(BaseModel):
-    title: str
+    title: StrictStr
     description: Optional[StrictStr] = "No description available."
     calories: int
 
@@ -22,17 +22,17 @@ class Item(ItemBase):
 
 
 class UserBase(BaseModel):
-    username: str
-    email: str
+    username: StrictStr
+    email: StrictStr
 
 
 class UserCreate(UserBase):
-    password: str
-    created_at: datetime.datetime
+    password: StrictStr
 
 
 class User(UserBase):
     id: int
+    created_at: datetime.datetime
 
     class Config:
         orm_mode = True
