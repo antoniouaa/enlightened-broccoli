@@ -7,9 +7,10 @@ from fastapi import FastAPI
 from broccoli.db import engine, Base
 from broccoli.routers import items, users
 
+Base.metadata.create_all(bind=engine)
+
 
 def create_app():
-    Base.metadata.create_all(bind=engine)
 
     app = FastAPI()
 
