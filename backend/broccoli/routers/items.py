@@ -11,10 +11,14 @@ router = APIRouter()
 
 @router.get("/", response_model=List[schemas.Item], status_code=200)
 async def get_item(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = operations.get_items(db, skip=skip, limit=limit)
-    return items
+    return operations.get_items(db, skip=skip, limit=limit)
 
 
 @router.post("/", response_model=schemas.Item, status_code=201)
 async def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return operations.create_item(db, item=item)
+
+
+@router.delete("/{item_id}", status_code=204)
+async def delete_item(item_id: int, db: Session = Depends(get_db)):
+    operations.delete_item(db, item_id=item_id)

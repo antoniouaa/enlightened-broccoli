@@ -9,13 +9,13 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from broccoli.app import create_app
-from broccoli.db import Base, get_db
-
+from broccoli import create_app
+from broccoli.db import get_db
+from broccoli.models import Base
 
 test_items = [
     {
-        "title": "chicken thighs",
+        "title": "chicken",
         "description": "delicious chicken thighs, high in fat",
         "calories": 150,
     },
@@ -28,7 +28,9 @@ test_users = [
 ]
 
 
-SQLALCHEMY_DATABASE_URL = os.getenv("TEST_DB_CONNECTION")
+SQLALCHEMY_DATABASE_URL = (
+    "postgresql+psycopg2://postgres:postgres@127.0.0.1:5432/test_broccoli"
+)  # os.getenv("TEST_DB_CONNECTION")
 test_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 

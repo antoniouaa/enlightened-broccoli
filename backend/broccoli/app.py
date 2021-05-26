@@ -4,7 +4,8 @@ dotenv.load_dotenv()
 
 from fastapi import FastAPI
 
-from broccoli.db import engine, Base
+from broccoli.db import engine
+from broccoli.models import Base
 from broccoli.routers import items, users
 
 Base.metadata.create_all(bind=engine)
