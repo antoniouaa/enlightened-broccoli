@@ -30,7 +30,7 @@ test_users = [
 
 SQLALCHEMY_DATABASE_URL = (
     "postgresql+psycopg2://postgres:postgres@127.0.0.1:5432/test_broccoli"
-)  # os.getenv("TEST_DB_CONNECTION")
+)
 test_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
