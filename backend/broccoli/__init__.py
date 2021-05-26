@@ -1,1 +1,1 @@
-from broccoli.app import app
+from broccoli.app import create_app
