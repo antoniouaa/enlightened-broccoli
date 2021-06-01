@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from broccoli import models, schemas
-from broccoli.utils import get_password_hash
+from broccoli.security import get_password_hash
 
 
 def get_user_by_id(db: Session, user_id: int):
