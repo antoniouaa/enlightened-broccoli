@@ -20,9 +20,9 @@ async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return operations.create_user(db, user=user)
 
 
-@router.get("/{user_id}", response_model=schemas.User, status_code=200)
-async def read_user_by_id(user_id: int, db: Session = Depends(get_db)):
-    db_user = operations.get_user_by_id(db, user_id=user_id)
+@router.get("/{user_name}", response_model=schemas.User, status_code=200)
+async def read_user_by_email(user_name: str, db: Session = Depends(get_db)):
+    db_user = operations.get_user_by_username(db, username=user_name)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
