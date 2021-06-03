@@ -1,23 +1,66 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { loginUser } from "../Actions/userSlice";
+
 export const LogIn = () => {
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    fetch("/login", {
-      headers: {},
-    });
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onUsernameChange = (e) => setUsername(e.target.value);
+  const onPasswordChange = (e) => setPassword(e.target.value);
+
+  const onLoginClick = async () => {
+    const res = dispatch(loginUser({ username, password }));
+    if (res.error) {
+      console.log(res.error);
+      alert("User does not exist!");
+      return;
+    }
+    history.push("/home");
   };
+
+  const canLogin = Boolean(username) && Boolean(password);
 
   return (
     <div>
-      <p>Log In to view profile</p>
+      <h1>Log in</h1>
       <form>
-        <label>Username: </label>
-        <input type="text" />
+        <label htmlFor="username">Username: </label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={onUsernameChange}
+        />
         <br />
-        <label>Password: </label>
-        <input type="password" />
+        <label htmlFor="password">Password: </label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={onPasswordChange}
+        />
         <br />
-        <button type="submit">Log in</button>
+        <input
+          type="button"
+          value="Log in"
+          onClick={onLoginClick}
+          disabled={!canLogin}
+        />
       </form>
+      <p>
+        Don't have an account? <br />
+        <input
+          type="button"
+          value="Sign up"
+          onClick={() => history.push("/signup")}
+        />
+      </p>
     </div>
   );
 };

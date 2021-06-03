@@ -3,10 +3,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const signUpUser = createAsyncThunk(
   "signUpUser",
   async ({ username, email, password }) => {
+    const urlParams = new URLSearchParams({
+      username: username,
+      email: email,
+      password: password,
+    });
+
     const response = await fetch(`/users/signup`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: urlParams,
+      redirect: "follow",
     });
     const data = await response.json();
     if (response.status === 201) {
@@ -19,10 +26,17 @@ export const signUpUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "loginUser",
   async ({ username, password }) => {
+    const urlParams = new URLSearchParams({
+      username,
+      password,
+    });
+
+    console.log(urlParams);
     const response = await fetch(`/users/login`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: urlParams,
+      redirect: "follow",
     });
     const data = await response.json();
     if (response.status === 201) {
