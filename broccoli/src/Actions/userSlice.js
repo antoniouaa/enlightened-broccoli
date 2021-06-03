@@ -30,8 +30,6 @@ export const loginUser = createAsyncThunk(
       username,
       password,
     });
-
-    console.log(urlParams);
     const response = await fetch(`/users/login`, {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
@@ -40,8 +38,8 @@ export const loginUser = createAsyncThunk(
     });
     const data = await response.json();
     if (response.status === 201) {
-      const token = await data.access_token;
-      return { token, isLoggedIn: true };
+      const { token, user } = data;
+      return { user, token, isLoggedIn: true };
     }
     throw new Error(data.detail);
   }
@@ -61,9 +59,10 @@ const userSlice = createSlice({
     },
     [signUpUser.fulfilled]: (state, action) => {
       state.status = "succeeded";
+      state.error = "";
     },
     [signUpUser.rejected]: (state, action) => {
-      state.error = action.error[0].msg;
+      state.error = action.error;
       state.status = "failed";
     },
     [loginUser.pending]: (state, action) => {
@@ -71,10 +70,11 @@ const userSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.user = action.payload;
-      state.status = "failed";
+      state.status = "succeeded";
+      state.error = "";
     },
-    [loginUser.fulfilled]: (state, action) => {
-      state.error = action.error[0].msg;
+    [loginUser.rejected]: (state, action) => {
+      state.error = action.error;
       state.status = "failed";
     },
   },
@@ -83,5 +83,7 @@ const userSlice = createSlice({
 export const isUserLoggedIn = (state) => state.user.user.isLoggedIn;
 export const getError = (state) => state.user.error;
 export const getToken = (state) => state.user.user.token;
+export const getUser = (state) =>
+  isUserLoggedIn(state) ? state.user.user.user : null;
 
 export default userSlice.reducer;

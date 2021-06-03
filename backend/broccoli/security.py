@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 
 from broccoli.db import get_db
+from broccoli.schemas import User
 
 
 ACCESS_TOKEN_EXPIRY = 20
@@ -20,6 +21,7 @@ ALGORITHM = os.getenv("ALGORITHMS", "hs256")
 class Token(BaseModel):
     access_token: str
     token_type: str
+    user: User
 
 
 class TokenData(BaseModel):

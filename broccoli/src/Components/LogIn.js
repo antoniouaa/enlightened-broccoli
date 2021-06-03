@@ -15,10 +15,11 @@ export const LogIn = () => {
   const onPasswordChange = (e) => setPassword(e.target.value);
 
   const onLoginClick = async () => {
-    const res = dispatch(loginUser({ username, password }));
+    const res = await dispatch(loginUser({ username, password }));
     if (res.error) {
-      console.log(res.error);
-      alert("User does not exist!");
+      alert(res.error.message);
+      setUsername("");
+      setPassword("");
       return;
     }
     history.push("/home");
