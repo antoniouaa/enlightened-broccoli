@@ -1,5 +1,3 @@
-import os
-
 import dotenv
 
 dotenv.load_dotenv()
@@ -11,7 +9,8 @@ from sqlalchemy.orm import sessionmaker
 
 from broccoli import create_app
 from broccoli.db import get_db
-from broccoli.models import Base
+from broccoli.models import Base, User
+from broccoli.security import get_current_user
 
 test_items = [
     {
@@ -43,8 +42,18 @@ def override_get_db():
         test_db.close()
 
 
+def override_get_current_user():
+    authed_user = {
+        "username": "antoniouaa",
+        "email": "antoniouaa@hotmail.com",
+        "hashed_password": "some_hashed_string",
+    }
+    return User(**authed_user)
+
+
 app = create_app()
 app.dependency_overrides[get_db] = override_get_db
+app.dependency_overrides[get_current_user] = override_get_current_user
 
 
 @pytest.fixture(scope="function")

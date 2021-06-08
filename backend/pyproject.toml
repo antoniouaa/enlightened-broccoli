@@ -28,6 +28,11 @@ psycopg2-binary = "^2.8.6"
 pytest-cov = "^2.12.0"
 coveralls = "^3.0.1"
 black = "^21.5b1"
+taskipy = "^1.8.1"
+
+[tool.taskipy.tasks]
+format = { cmd = "black .\\broccoli\\", help = "Formats the code using the Black formatter"}
+test = { cmd = "pytest -vvv", help = "Runs the test suite"}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
