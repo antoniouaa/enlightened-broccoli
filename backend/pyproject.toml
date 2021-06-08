@@ -33,6 +33,9 @@ taskipy = "^1.8.1"
 [tool.taskipy.tasks]
 format = { cmd = "black .\\broccoli\\", help = "Formats the code using the Black formatter"}
 test = { cmd = "pytest -vvv", help = "Runs the test suite"}
+lint = { cmd = "pre-commit run --all-files", help = "Lints the code with pre-commit"}
+migrate = {cmd = "alembic revision --autogenerate", help="Create a migration with alembic, optional -m message"}
+upgrade = {cmd = "alembic upgrade head", help="Upgrades head to apply the most recent migration"}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
