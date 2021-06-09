@@ -44,6 +44,10 @@ def create_item(db: Session, item: schemas.ItemCreate):
     return db_item
 
 
-def delete_item(db: Session, item_id):
+def delete_item(db: Session, item_id: int):
     db.query(models.Item).filter(models.Item.id == item_id).delete()
     db.commit()
+
+
+def get_entries(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Entry).offset(skip).limit(limit).all()
