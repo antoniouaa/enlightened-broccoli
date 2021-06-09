@@ -7,20 +7,11 @@ from broccoli.db import Base
 
 
 association_table = Table(
-    "association",
+    "entry_to_item",
     Base.metadata,
-    Column("item_id", Integer, ForeignKey("items.id")),
     Column("entry_id", Integer, ForeignKey("entries.id")),
+    Column("item_id", Integer, ForeignKey("items.id")),
 )
-
-
-class Item(Base):
-    __tablename__ = "items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True, nullable=False)
-    description = Column(String, nullable=True)
-    calories = Column(Integer, nullable=False)
 
 
 class User(Base):
@@ -31,12 +22,21 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     created_at = Column(DateTime(timezone=True), default=func.now())
-    entry_id = Column(Integer, ForeignKey("entries.id"))
-    entry = relationship("Entry", backref="users")
+    entries = relationship("Entry", backref="user")
 
 
 class Entry(Base):
     __tablename__ = "entries"
 
     id = Column(Integer, primary_key=True, index=True)
-    items = relationship("Item", secondary=association_table, backref="entries")
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    items = relationship("Item", secondary=association_table, backref="entry")
+
+
+class Item(Base):
+    __tablename__ = "items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True, nullable=False)
+    description = Column(String, nullable=True)
+    calories = Column(Integer, nullable=False)

@@ -51,3 +51,7 @@ def delete_item(db: Session, item_id: int):
 
 def get_entries(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Entry).offset(skip).limit(limit).all()
+
+
+def create_entry(db: Session, entry: schemas.Entry):
+    ...
