@@ -22,6 +22,10 @@ const Headline = styled.h1`
   font-weight: 600;
   letter-spacing: 0.2rem;
   color: #482ff7;
+
+  @media only screen and (max-width: 768px) {
+    align-self: center;
+  }
 `;
 
 const NavMenu = styled.ul`
@@ -40,6 +44,7 @@ const NavMenu = styled.ul`
     text-align: center;
     transition: 0.3s;
     box_shadow: 0 10px 27px rgba(0, 0, 0, 0.5);
+    justify-content: stretch;
 
     &.active {
       right: 0;
@@ -48,7 +53,8 @@ const NavMenu = styled.ul`
 `;
 
 const NavItem = styled.li`
-  margin-left: 5rem;
+  margin-left: 2.5rem;
+  margin-right: 2rem;
   font-size: 1.6rem;
   font-weight: 400;
 
@@ -62,6 +68,9 @@ const NavItem = styled.li`
 
   @media only screen and (max-width: 768px) {
     margin: 2.5rem 0;
+    &:hover {
+      background-color: #fff;
+    }
   }
 `;
 
