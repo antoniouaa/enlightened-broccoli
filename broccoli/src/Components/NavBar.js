@@ -6,26 +6,22 @@ import styled from "styled-components";
 
 import { isUserLoggedIn } from "../Actions/userSlice";
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-`;
-
 const Header = styled.header`
   border-bottom: 1px solid #e2e8f0;
 `;
 
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  padding: 0.5rem 10rem;
+`;
+
 const Headline = styled.h1`
-  font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.2rem;
   color: #482ff7;
-
-  @media only screen and (max-width: 768px) {
-    align-self: center;
-  }
 `;
 
 const NavMenu = styled.ul`
@@ -55,7 +51,6 @@ const NavMenu = styled.ul`
 const NavItem = styled.li`
   margin-left: 2.5rem;
   margin-right: 2rem;
-  font-size: 1.6rem;
   font-weight: 400;
 
   a {
@@ -153,3 +148,5 @@ export const NavBar = () => {
     </Header>
   );
 };
+
+export default NavBar;

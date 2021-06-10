@@ -5,3 +5,5 @@ export const AddFoodItem = () => {
     </div>
   );
 };
+
+export default AddFoodItem;
