@@ -80,6 +80,10 @@ export const Input = styled.input`
   padding: 0 20px 0 38px;
   outlier: none;
   border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledLink = styled.a`
@@ -108,6 +112,7 @@ export const Home = () => {
                   value="Sign up - for free"
                   height="31px"
                   textColor="#fff"
+                  onClick={() => history.push("/signup")}
                 />
               </WrapInput>
             </WrapSignUp>
