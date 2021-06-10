@@ -59,6 +59,7 @@ const WrapInput = styled.div`
 
   &:hover {
     cursor: ${({ isButton }) => (isButton ? "pointer" : "")};
+    background-color: ${({ isButton }) => (isButton ? "#482ff7" : "#e6e6e6")};
   }
 `;
 
@@ -66,6 +67,7 @@ const Input = styled.input`
   color: ${({ textColor }) => textColor || "#403866"};
   font-weight: ${({ textHeavy }) => textHeavy || 400};
   line-height: 1.2;
+  letter-spacing: 0.1rem;
   font-size: 18px;
   display: block;
   width: 100%;
@@ -140,7 +142,7 @@ export const LogIn = () => {
                 textColor="#fff"
                 textHeavy="500"
                 type="button"
-                value="Log in"
+                value="LOG IN"
                 onClick={onLoginClick}
                 disabled={!canLogin}
               />
