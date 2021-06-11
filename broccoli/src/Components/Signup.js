@@ -41,9 +41,10 @@ const Step = styled.li`
     margin: 0 auto 5px auto;
   }
 
-  &.active {
-    background-color: ${COLORS.buttonColor},
-    color: #fff
+  &.active:before,
+  &.active:after {
+    background-color: ${COLORS.buttonColor};
+    color: #fff;
   }
 `;
 
@@ -74,9 +75,31 @@ const SmallButton = styled(WrapInput)`
   margin-left: ${({ marginLeft }) => marginLeft || "0px"};
 `;
 
+const FormLabel = styled.p`
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const SexSelect = styled.select`
+  color: ${({ textColor }) => textColor || COLORS.inputBackgroundColor};
+  font-weight: ${({ textHeavy }) => textHeavy || 400};
+  height: 62px;
+  background-color: #fff;
+  letter-spacing: 0.1rem;
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  border: none;
+
+  option {
+    color: ${COLORS.inputBackgroundColor};
+  }
+`;
+
 export const SignUp = () => {
   const userInput = useRef(null);
   const passInput = useRef(null);
+  const retypePassInput = useRef(null);
   const emailInput = useRef(null);
   const step1 = useRef(null);
   const step2 = useRef(null);
@@ -88,23 +111,38 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [age, setAge] = useState("");
+  const [sex, setSex] = useState("");
+
   const [currentFieldset, setCurrentFieldset] = useState(0);
 
   const fieldsets = [accountDetails, personalDetails, submitForm];
   const progressSteps = [step1, step2, step3];
 
   const onNextClick = () => {
-    fieldsets[currentFieldset + 1].current.classList.toggle("active");
-    setCurrentFieldset(currentFieldset + 1);
+    // if (!canSignup) {
+    //   addValidationStyles();
+    //   return;
+    // }
+
     fieldsets[currentFieldset].current.classList.toggle("active");
-    progressSteps[currentFieldset].current.classList.toggle("active");
+
+    fieldsets[currentFieldset + 1].current.classList.toggle("active");
+    progressSteps[currentFieldset + 1].current.classList.toggle("active");
+
+    setCurrentFieldset(currentFieldset + 1);
   };
 
   const onPrevClick = () => {
-    fieldsets[currentFieldset - 1].current.classList.toggle("active");
-    setCurrentFieldset(currentFieldset - 1);
     fieldsets[currentFieldset].current.classList.toggle("active");
     progressSteps[currentFieldset].current.classList.toggle("active");
+
+    fieldsets[currentFieldset - 1].current.classList.toggle("active");
+
+    setCurrentFieldset(currentFieldset - 1);
   };
 
   const onSubmitClick = () => {
@@ -114,28 +152,54 @@ export const SignUp = () => {
     }
   };
 
-  const toggleValidationStyles = () => {
-    userInput.current.classList.toggle("invalid");
-    passInput.current.classList.toggle("invalid");
-    emailInput.current.classList.toggle("invalid");
+  const addValidationStyles = () => {
+    userInput.current.classList.add("invalid");
+    passInput.current.classList.add("invalid");
+    emailInput.current.classList.add("invalid");
+    retypePassInput.current.classList.add("invalid");
+  };
+
+  const removeValidationStyles = () => {
+    userInput.current.classList.remove("invalid");
+    passInput.current.classList.remove("invalid");
+    emailInput.current.classList.remove("invalid");
+    retypePassInput.current.classList.remove("invalid");
   };
 
   const onUsernameChange = (e) => {
-    toggleValidationStyles();
+    removeValidationStyles();
     setUsername(e.target.value);
   };
 
   const onPasswordChange = (e) => {
-    toggleValidationStyles();
+    removeValidationStyles();
     setPassword(e.target.value);
   };
 
   const onEmailChange = (e) => {
-    toggleValidationStyles();
+    removeValidationStyles();
     setEmail(e.target.value);
   };
 
-  const canSignup = Boolean(username) && Boolean(password) && Boolean(email);
+  const onRetypePassword = (e) => {
+    removeValidationStyles();
+    setRetypePassword(e.target.value);
+  };
+
+  const checkEqualPasswords = () => {
+    return retypePassword === password;
+  };
+
+  const canSignup =
+    checkEqualPasswords() &&
+    Boolean(username) &&
+    Boolean(password) &&
+    Boolean(email);
+
+  const onHeightChange = (e) => setHeight(e.target.value);
+  const onWeightChange = (e) => setWeight(e.target.value);
+  const onSexChange = (e) => setSex(e.target.value);
+  const onAgeChange = (e) => setAge(e.target.value);
 
   return (
     <Container>
@@ -151,7 +215,7 @@ export const SignUp = () => {
           <Form>
             <Title>Sign up</Title>
             <FormStep ref={accountDetails} className="active">
-              Account Details
+              <FormLabel>Account Details</FormLabel>
               <WrapInput ref={emailInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="email"
@@ -180,6 +244,18 @@ export const SignUp = () => {
                   required
                 />
               </WrapInput>
+              <WrapInput
+                ref={retypePassInput}
+                bgColor={COLORS.defaultBackground}>
+                <Input
+                  type="password"
+                  id="retypepassword"
+                  value={password}
+                  placeholder="Retype Password"
+                  onChange={onRetypePassword}
+                  required
+                />
+              </WrapInput>
               <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
                 <Input
                   textColor="#fff"
@@ -191,18 +267,57 @@ export const SignUp = () => {
               </WrapInput>
             </FormStep>
             <FormStep ref={personalDetails}>
-              Personal Details
+              <FormLabel>Personal Details</FormLabel>
               <WrapInput bgColor={COLORS.defaultBackground}>
-                <Input id="height" value="" placeholder="Height" required />
+                <Input
+                  id="height"
+                  value={height}
+                  placeholder="Height (cm)"
+                  onChange={onHeightChange}
+                  required
+                />
               </WrapInput>
+              <ButtonWrap>
+                <SmallButton
+                  bgColor={COLORS.defaultBackground}
+                  marginRight="10px">
+                  <Input
+                    id="Age"
+                    value={age}
+                    placeholder="Age"
+                    onChange={onAgeChange}
+                    required
+                  />
+                </SmallButton>
+                <SmallButton
+                  bgColor={COLORS.defaultBackground}
+                  marginLeft="10px">
+                  <SexSelect
+                    name="sex"
+                    id="sex"
+                    onChange={onSexChange}
+                    required>
+                    <option hidden>Sex</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </SexSelect>
+                </SmallButton>
+              </ButtonWrap>
               <WrapInput bgColor={COLORS.defaultBackground}>
-                <Input id="weight" value="" placeholder="Weight" required />
+                <Input
+                  id="weight"
+                  value={weight}
+                  placeholder="Weight (kg)"
+                  onChange={onWeightChange}
+                  required
+                />
               </WrapInput>
+
               <ButtonWrap>
                 <SmallButton
                   isHoverable
                   bgColor={COLORS.buttonColor}
-                  marginright="10px">
+                  marginRight="10px">
                   <Input
                     textColor="#fff"
                     textHeavy="500"
@@ -226,7 +341,7 @@ export const SignUp = () => {
               </ButtonWrap>
             </FormStep>
             <FormStep ref={submitForm}>
-              Confirm account creation
+              <FormLabel>Confirm account creation</FormLabel>
               <ButtonWrap>
                 <SmallButton
                   isHoverable
