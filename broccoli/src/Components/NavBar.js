@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import styled from "styled-components";
 
 import { isUserLoggedIn } from "../Actions/userSlice";
@@ -15,7 +14,8 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   font-size: 1.4rem;
-  padding: 0.5rem 10rem;
+  padding: 0.5rem 0.5rem;
+  z-index: 9999;
 `;
 
 const Headline = styled.h1`
@@ -113,7 +113,7 @@ export const NavBar = () => {
   return (
     <Header>
       <Nav>
-        <Link to="/home">
+        <Link to="/">
           <Headline>enlightened broccoli</Headline>
         </Link>
         <NavMenu ref={menu}>

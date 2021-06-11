@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { getUser } from "../Actions/userSlice";
-
 import profile from "../Assets/profile-icon.png";
 
 export const Profile = () => {

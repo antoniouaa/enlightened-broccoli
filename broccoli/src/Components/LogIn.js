@@ -2,11 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-
 import styled from "styled-components";
 
 import { loginUser } from "../Actions/userSlice";
-
 import {
   Container,
   Wrapper,
@@ -14,13 +12,18 @@ import {
   WrapInput,
   Input,
   StyledLink,
-} from "./Home";
+} from "./StyledComponents";
 
 const LoginWrapper = styled.div`
-  width: 25rem;
+  max-width: 25rem;
   position: relative;
   padding-top: 90px;
   padding-bottom: 90px;
+
+  @media only screen and (max-width: 768px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 `;
 
 const Form = styled.form`
