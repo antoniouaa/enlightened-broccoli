@@ -9,6 +9,8 @@ export const COLORS = {
   titleGreyColor: "#475569",
   styledLinkColor: "#482ff7",
   defaultBackground: "#fff",
+  greenSubmitButtonColor: "#47cf73",
+  greenSubmitButtonColorHover: "#309651",
 };
 
 export const Container = styled.div`
@@ -37,29 +39,34 @@ export const WrapInput = styled.div`
   position: relative;
   width: 100%;
   background-color: ${({ bgColor }) => bgColor || COLORS.defaultWrapInputColor};
-  border: 1pc solid transparent;
+  border: 1px solid transparent;
   border-radius: 3px;
   margin-bottom: 8px;
-  margin-top: ${({ mt }) => mt || "8px"};
 
   &:hover {
     cursor: ${({ isHoverable }) => (isHoverable ? "pointer" : "")};
-    background-color: ${({ isHoverable }) =>
-      isHoverable && COLORS.buttonColorHover};
+    background-color: ${({ isHoverable, isSubmit }) =>
+      isHoverable &&
+      (isSubmit
+        ? COLORS.greenSubmitButtonColorHover
+        : COLORS.buttonColorHover)};
+  }
+
+  &.invalid {
+    border-color: red;
   }
 `;
 
 export const Input = styled.input`
   color: ${({ textColor }) => textColor || COLORS.inputBackgroundColor};
   font-weight: ${({ textHeavy }) => textHeavy || 400};
-  line-height: 1.2;
   letter-spacing: 0.1rem;
   font-size: 18px;
   display: block;
   width: 100%;
   background: 0 0;
   height: ${({ height }) => height || "62px"};
-  padding: 0 20px 0 38px;
+  padding: 0 20px 0 20px;
   outlier: none;
   border: none;
 

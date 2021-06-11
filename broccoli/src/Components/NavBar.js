@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { isUserLoggedIn } from "../Actions/userSlice";
+import { COLORS } from "./StyledComponents";
 
 const Header = styled.header`
   border-bottom: 1px solid #e2e8f0;
@@ -21,7 +22,7 @@ const Nav = styled.nav`
 const Headline = styled.h1`
   font-weight: 500;
   letter-spacing: 0.2rem;
-  color: #482ff7;
+  color: ${COLORS.styledLinkColor};
 `;
 
 const NavMenu = styled.ul`
@@ -54,11 +55,11 @@ const NavItem = styled.li`
   font-weight: 400;
 
   a {
-    color: #475569;
+    color: ${COLORS.titleGreyColor};
   }
 
   a:hover {
-    color: #482ff7;
+    color: ${COLORS.styledLinkColor};
   }
 
   @media only screen and (max-width: 768px) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -21,13 +21,34 @@ export const LogIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const userInput = useRef(null);
+  const passInput = useRef(null);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const onUsernameChange = (e) => setUsername(e.target.value);
-  const onPasswordChange = (e) => setPassword(e.target.value);
+  const onUsernameChange = (e) => {
+    toggleValidationStyles();
+    setUsername(e.target.value);
+  };
+  const onPasswordChange = (e) => {
+    toggleValidationStyles();
+    setPassword(e.target.value);
+  };
+
+  const canLogin = Boolean(username) && Boolean(password);
+
+  const toggleValidationStyles = () => {
+    userInput.current.classList.toggle("invalid");
+    passInput.current.classList.toggle("invalid");
+  };
 
   const onLoginClick = async () => {
+    if (!canLogin) {
+      alert("Fill in your login details!");
+      toggleValidationStyles();
+      return;
+    }
     const res = await dispatch(loginUser({ username, password }));
     if (res.error) {
       alert(res.error.message);
@@ -38,15 +59,13 @@ export const LogIn = () => {
     history.push("/home");
   };
 
-  const canLogin = Boolean(username) && Boolean(password);
-
   return (
     <Container>
       <Wrapper>
-        <LoginWrapper formColor="#e6e6e6">
+        <LoginWrapper formColor={COLORS.defaultWrapInputColor}>
           <Form>
             <Title>Log in</Title>
-            <WrapInput bgColor={COLORS.defaultBackground}>
+            <WrapInput ref={userInput} bgColor={COLORS.defaultBackground}>
               <Input
                 id="username"
                 value={username}
@@ -55,7 +74,7 @@ export const LogIn = () => {
                 required
               />
             </WrapInput>
-            <WrapInput bgColor={COLORS.defaultBackground}>
+            <WrapInput ref={passInput} bgColor={COLORS.defaultBackground}>
               <Input
                 type="password"
                 id="password"
@@ -67,13 +86,11 @@ export const LogIn = () => {
             </WrapInput>
             <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
               <Input
-                height="31px"
                 textColor="#fff"
                 textHeavy="500"
                 type="button"
                 value="LOG IN"
                 onClick={onLoginClick}
-                disabled={!canLogin}
               />
             </WrapInput>
           </Form>

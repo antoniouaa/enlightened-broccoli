@@ -63,13 +63,14 @@ export const Home = () => {
           <WrapIconText>
             <Headline>Calorie</Headline>
             <Headline>and macronutrient </Headline>
-            <Headline isBlue={COLORS.titleColor}>tracking for dummies</Headline>
+            <Headline isBlue={COLORS.buttonColor}>
+              tracking for dummies
+            </Headline>
             <WrapSignUp>
               <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
                 <Input
                   type="button"
                   value="Sign up - for free"
-                  height="31px"
                   textColor="#fff"
                   onClick={() => history.push("/signup")}
                 />
