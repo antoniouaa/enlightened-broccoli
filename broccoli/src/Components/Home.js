@@ -11,6 +11,7 @@ import {
   WrapInput,
   Input,
   StyledLink,
+  COLORS,
 } from "./StyledComponents";
 
 const WrapIcon = styled.div`
@@ -48,7 +49,7 @@ const WrapIconText = styled.div`
 `;
 
 const Headline = styled.h1`
-  color: ${({ isBlue }) => (isBlue ? "#827ffe" : "#475569")};
+  color: ${({ isBlue }) => isBlue || COLORS.titleGreyColor};
 `;
 
 export const Home = () => {
@@ -62,9 +63,9 @@ export const Home = () => {
           <WrapIconText>
             <Headline>Calorie</Headline>
             <Headline>and macronutrient </Headline>
-            <Headline isBlue={"#403866"}>tracking for dummies</Headline>
+            <Headline isBlue={COLORS.titleColor}>tracking for dummies</Headline>
             <WrapSignUp>
-              <WrapInput isButton mt="20px">
+              <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
                 <Input
                   type="button"
                   value="Sign up - for free"

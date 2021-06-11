@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 
 import { loginUser } from "../Actions/userSlice";
 import {
@@ -12,38 +11,11 @@ import {
   WrapInput,
   Input,
   StyledLink,
+  Form,
+  Title,
+  LoginWrapper,
+  COLORS,
 } from "./StyledComponents";
-
-const LoginWrapper = styled.div`
-  max-width: 25rem;
-  position: relative;
-  padding-top: 90px;
-  padding-bottom: 90px;
-
-  @media only screen and (max-width: 768px) {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-`;
-
-const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
-
-const Title = styled.span`
-  font-weight: 700;
-  font-size: 30px;
-  color: #403866;
-  line-height: 1.2;
-  text-transform: uppercase;
-  text-align: center;
-  width: 100%;
-  display: block;
-  padding-bottom: 51px;
-`;
 
 export const LogIn = () => {
   const dispatch = useDispatch();
@@ -71,10 +43,10 @@ export const LogIn = () => {
   return (
     <Container>
       <Wrapper>
-        <LoginWrapper>
+        <LoginWrapper formColor="#e6e6e6">
           <Form>
             <Title>Log in</Title>
-            <WrapInput>
+            <WrapInput bgColor={COLORS.defaultBackground}>
               <Input
                 id="username"
                 value={username}
@@ -83,7 +55,7 @@ export const LogIn = () => {
                 required
               />
             </WrapInput>
-            <WrapInput>
+            <WrapInput bgColor={COLORS.defaultBackground}>
               <Input
                 type="password"
                 id="password"
@@ -93,8 +65,9 @@ export const LogIn = () => {
                 required
               />
             </WrapInput>
-            <WrapInput isButton>
+            <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
               <Input
+                height="31px"
                 textColor="#fff"
                 textHeavy="500"
                 type="button"
