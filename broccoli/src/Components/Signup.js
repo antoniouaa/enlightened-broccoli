@@ -96,6 +96,27 @@ const SexSelect = styled.select`
   }
 `;
 
+const WrapRadio = styled.div`
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 48px;
+  position: relative;
+  border: 1px solid ${COLORS.buttonColor};
+  border-radius: 5px;
+  padding: 3px;
+  background-color: #fff;
+  margin-bottom: 10px;
+  font-size: 18px;
+`;
+
+const RadioButton = styled.input`
+  margin: 0 5px 0 5px;
+`;
+
 export const SignUp = () => {
   const userInput = useRef(null);
   const passInput = useRef(null);
@@ -116,6 +137,7 @@ export const SignUp = () => {
   const [weight, setWeight] = useState("");
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
+  const [goal, setGoal] = useState("maintain");
 
   const [currentFieldset, setCurrentFieldset] = useState(0);
 
@@ -209,7 +231,7 @@ export const SignUp = () => {
             Account
           </Step>
           <Step ref={step2}>Personal</Step>
-          <Step ref={step3}>Confirm</Step>
+          <Step ref={step3}>Goals</Step>
         </ProgressBar>
         <SignUpWrapper formColor={COLORS.defaultWrapInputColor}>
           <Form>
@@ -250,7 +272,7 @@ export const SignUp = () => {
                 <Input
                   type="password"
                   id="retypepassword"
-                  value={password}
+                  value={retypePassword}
                   placeholder="Retype Password"
                   onChange={onRetypePassword}
                   required
@@ -341,7 +363,41 @@ export const SignUp = () => {
               </ButtonWrap>
             </FormStep>
             <FormStep ref={submitForm}>
-              <FormLabel>Confirm account creation</FormLabel>
+              <FormLabel>What are your goals for joining?</FormLabel>
+              <WrapRadio>
+                <label>
+                  <RadioButton
+                    type="radio"
+                    id="lose"
+                    name="goal"
+                    value="lose"
+                  />
+                  Lose weight
+                </label>
+              </WrapRadio>
+              <WrapRadio>
+                <label>
+                  <RadioButton
+                    type="radio"
+                    id="maintain"
+                    name="goal"
+                    value="maintain"
+                    checked
+                  />
+                  Maintain weight
+                </label>
+              </WrapRadio>
+              <WrapRadio>
+                <label>
+                  <RadioButton
+                    type="radio"
+                    id="gain"
+                    name="goal"
+                    value="gain"
+                  />
+                  Gain weight
+                </label>
+              </WrapRadio>
               <ButtonWrap>
                 <SmallButton
                   isHoverable
@@ -364,7 +420,7 @@ export const SignUp = () => {
                     textColor="#fff"
                     textHeavy="500"
                     type="button"
-                    value="Submit"
+                    value="Sign up"
                     onClick={onSubmitClick}
                   />
                 </SmallButton>
