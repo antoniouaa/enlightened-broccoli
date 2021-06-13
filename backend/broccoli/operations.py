@@ -53,5 +53,23 @@ def get_entries(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Entry).offset(skip).limit(limit).all()
 
 
-def create_entry(db: Session, entry: schemas.Entry):
-    ...
+def create_entry(db: Session, user: schemas.User):
+    db_user = db.query(models.User).filter(models.User.id == user.id).first()
+    db_entry = models.Entry(user_id=db_user.id)
+    db_user.entries.append(db_entry)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_entry)
+    return db_entry
+
+
+def update_entry(db: Session, entry_id: int, item_id: int):
+    db_item = db.query(models.Item).filter(models.Item.id == item_id).first()
+    db_entry = db.query(models.Entry).get(entry_id)
+    db_entry.items.append(db_item)
+    db.add(db_entry)
+    db.commit()
+
+
+def get_items_by_entry_id(db: Session, entry_id: int):
+    return db.query(models.Entry).get(entry_id).items

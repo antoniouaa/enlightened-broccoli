@@ -273,7 +273,7 @@ export const SignUp = () => {
                   type="password"
                   id="retypepassword"
                   value={retypePassword}
-                  placeholder="Retype Password"
+                  placeholder="Confirm Password"
                   onChange={onRetypePassword}
                   required
                 />

@@ -2,7 +2,7 @@ from broccoli.security import get_current_user
 from typing import List
 
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 
 from broccoli import operations, schemas
 from broccoli.db import get_db
@@ -25,10 +25,33 @@ async def get_entries(
 
 @router.post("/", response_model=schemas.Entry, status_code=201)
 async def create_entry(
-    entry: schemas.EntryCreate,
+    db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)
+):
+    if user:
+        return operations.create_entry(db, user=user)
+    raise HTTPException(status_code=401, detail="You are not logged in")
+
+
+@router.patch("/", response_class=Response, status_code=204)
+async def update_entry(
+    entry_updates: schemas.EntryPatch,
+    db: Session = Depends(get_db),
+    user: schemas.User = Depends(get_current_user),
+):
+    if not user:
+        raise HTTPException(status_code=401, detail="You are not logged in")
+
+    entry_id = entry_updates.entry_id
+    item_id = entry_updates.item_id
+    operations.update_entry(db, entry_id=entry_id, item_id=item_id, user=user)
+
+
+@router.get("/{entry_id}/items", response_model=List[schemas.Item], status_code=200)
+async def get_items_by_entry_id(
+    entry_id: int,
     db: Session = Depends(get_db),
     user: schemas.User = Depends(get_current_user),
 ):
     if user:
-        operations.create_entry(db, entry=entry)
+        return operations.get_items_by_entry_id(db, entry_id=entry_id)
     raise HTTPException(status_code=401, detail="You are not logged in")

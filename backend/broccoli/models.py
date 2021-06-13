@@ -30,6 +30,7 @@ class Entry(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime(timezone=True), default=func.now())
+    user_id = Column(Integer, ForeignKey("users.id"))
     items = relationship("Item", secondary=association_table, backref="entry")
 
 

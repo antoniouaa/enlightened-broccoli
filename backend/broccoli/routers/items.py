@@ -25,8 +25,3 @@ async def create_item(
     if user:
         return operations.create_item(db, item=item)
     return HTTPException(status_code=401, detail="Not logged in")
-
-
-@router.delete("/{item_id}", status_code=204)
-async def delete_item(item_id: int, db: Session = Depends(get_db)):
-    operations.delete_item(db, item_id=item_id)
