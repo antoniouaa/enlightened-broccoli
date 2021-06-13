@@ -28,25 +28,30 @@ export const LogIn = () => {
   const [password, setPassword] = useState("");
 
   const onUsernameChange = (e) => {
-    toggleValidationStyles();
+    removeValidationStyles();
     setUsername(e.target.value);
   };
   const onPasswordChange = (e) => {
-    toggleValidationStyles();
+    removeValidationStyles();
     setPassword(e.target.value);
   };
 
   const canLogin = Boolean(username) && Boolean(password);
 
-  const toggleValidationStyles = () => {
-    userInput.current.classList.toggle("invalid");
-    passInput.current.classList.toggle("invalid");
+  const addValidationStyles = () => {
+    userInput.current.classList.add("invalid");
+    passInput.current.classList.add("invalid");
+  };
+
+  const removeValidationStyles = () => {
+    userInput.current.classList.remove("invalid");
+    passInput.current.classList.remove("invalid");
   };
 
   const onLoginClick = async () => {
     if (!canLogin) {
       alert("Fill in your login details!");
-      toggleValidationStyles();
+      addValidationStyles();
       return;
     }
     const res = await dispatch(loginUser({ username, password }));

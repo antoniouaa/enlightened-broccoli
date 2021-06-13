@@ -46,9 +46,9 @@ from broccoli.operations import get_user_by_username
 def authenticate_user(db: Session, username: str, password: str):
     db_user = get_user_by_username(db, username=username)
     if db_user is None:
-        return False
+        raise HTTPException(status_code=404, detail="User does not exist")
     if not verify_password(password, db_user.hashed_password):
-        return False
+        raise HTTPException(status_code=404, detail="Incorrect password")
     return db_user
 
 

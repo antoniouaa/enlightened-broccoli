@@ -26,10 +26,9 @@ export const signUpUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "loginUser",
   async ({ username, password }) => {
-    const urlParams = new URLSearchParams({
-      username,
-      password,
-    });
+    const urlParams = new URLSearchParams();
+    urlParams.append("username", username);
+    urlParams.append("password", password);
     const response = await fetch(`/users/login`, {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },

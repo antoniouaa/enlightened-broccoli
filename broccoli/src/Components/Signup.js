@@ -122,6 +122,10 @@ export const SignUp = () => {
   const passInput = useRef(null);
   const retypePassInput = useRef(null);
   const emailInput = useRef(null);
+  const heightInput = useRef(null);
+  const sexInput = useRef(null);
+  const weightInput = useRef(null);
+  const ageInput = useRef(null);
   const step1 = useRef(null);
   const step2 = useRef(null);
   const step3 = useRef(null);
@@ -145,10 +149,14 @@ export const SignUp = () => {
   const progressSteps = [step1, step2, step3];
 
   const onNextClick = () => {
-    // if (!canSignup) {
-    //   addValidationStyles();
-    //   return;
-    // }
+    if (currentFieldset === 0 && !accountDetailsValid) {
+      addValidationStyles();
+      return;
+    }
+    if (currentFieldset === 1 && !personalDetailsValid) {
+      addValidationStyles();
+      return;
+    }
 
     fieldsets[currentFieldset].current.classList.toggle("active");
 
@@ -168,10 +176,7 @@ export const SignUp = () => {
   };
 
   const onSubmitClick = () => {
-    if (!canSignup) {
-      alert("You need to complete the form!");
-      return;
-    }
+    alert("You need to complete the form!");
   };
 
   const addValidationStyles = () => {
@@ -179,6 +184,10 @@ export const SignUp = () => {
     passInput.current.classList.add("invalid");
     emailInput.current.classList.add("invalid");
     retypePassInput.current.classList.add("invalid");
+    heightInput.current.classList.add("invalid");
+    weightInput.current.classList.add("invalid");
+    sexInput.current.classList.add("invalid");
+    ageInput.current.classList.add("invalid");
   };
 
   const removeValidationStyles = () => {
@@ -186,6 +195,10 @@ export const SignUp = () => {
     passInput.current.classList.remove("invalid");
     emailInput.current.classList.remove("invalid");
     retypePassInput.current.classList.remove("invalid");
+    heightInput.current.classList.remove("invalid");
+    weightInput.current.classList.remove("invalid");
+    sexInput.current.classList.remove("invalid");
+    ageInput.current.classList.remove("invalid");
   };
 
   const onUsernameChange = (e) => {
@@ -212,16 +225,32 @@ export const SignUp = () => {
     return retypePassword === password;
   };
 
-  const canSignup =
+  const accountDetailsValid =
     checkEqualPasswords() &&
     Boolean(username) &&
     Boolean(password) &&
     Boolean(email);
 
-  const onHeightChange = (e) => setHeight(e.target.value);
-  const onWeightChange = (e) => setWeight(e.target.value);
-  const onSexChange = (e) => setSex(e.target.value);
-  const onAgeChange = (e) => setAge(e.target.value);
+  const personalDetailsValid =
+    Boolean(height) && Boolean(sex) && Boolean(weight) && Boolean(age);
+
+  const onHeightChange = (e) => {
+    removeValidationStyles();
+    setHeight(e.target.value);
+  };
+  const onWeightChange = (e) => {
+    removeValidationStyles();
+    setWeight(e.target.value);
+  };
+  const onSexChange = (e) => {
+    removeValidationStyles();
+    setSex(e.target.value);
+  };
+  const onAgeChange = (e) => {
+    removeValidationStyles();
+    setAge(e.target.value);
+  };
+  const onGoalChange = (e) => setGoal(e.target.value);
 
   return (
     <Container>
@@ -290,7 +319,7 @@ export const SignUp = () => {
             </FormStep>
             <FormStep ref={personalDetails}>
               <FormLabel>Personal Details</FormLabel>
-              <WrapInput bgColor={COLORS.defaultBackground}>
+              <WrapInput ref={heightInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="height"
                   value={height}
@@ -301,6 +330,7 @@ export const SignUp = () => {
               </WrapInput>
               <ButtonWrap>
                 <SmallButton
+                  ref={ageInput}
                   bgColor={COLORS.defaultBackground}
                   marginRight="10px">
                   <Input
@@ -313,7 +343,8 @@ export const SignUp = () => {
                 </SmallButton>
                 <SmallButton
                   bgColor={COLORS.defaultBackground}
-                  marginLeft="10px">
+                  marginLeft="10px"
+                  ref={sexInput}>
                   <SexSelect
                     name="sex"
                     id="sex"
@@ -325,7 +356,7 @@ export const SignUp = () => {
                   </SexSelect>
                 </SmallButton>
               </ButtonWrap>
-              <WrapInput bgColor={COLORS.defaultBackground}>
+              <WrapInput ref={weightInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="weight"
                   value={weight}
