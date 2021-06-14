@@ -35,13 +35,12 @@ line-length = 88
 include = '\.pyi?$'
 extend-exclude = '''
 /(
-    | tests
     | alembic
 )/
 '''
 
 [tool.taskipy.tasks]
-run = {cmd = "uvicorn broccoli:create_app --factory", help="Launches the app"}
+run = { cmd = "uvicorn broccoli:create_app --factory", help="Launches the app"}
 format = { cmd = "black .", help = "Formats the code using the Black formatter"}
 test = { cmd = "pytest -vvv", help = "Runs the test suite"}
 lint = { cmd = "pre-commit run --all-files", help = "Lints the code with pre-commit"}
