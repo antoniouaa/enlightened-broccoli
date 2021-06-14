@@ -61,7 +61,7 @@ export const LogIn = () => {
       setPassword("");
       return;
     }
-    history.push("/home");
+    history.push("/");
   };
 
   return (
