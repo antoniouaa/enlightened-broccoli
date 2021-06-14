@@ -1,12 +1,12 @@
 import datetime
 from typing import Optional, List
 
-from pydantic import BaseModel, StrictStr, Field
+from pydantic import BaseModel, StrictStr
 
 
 class ItemBase(BaseModel):
     title: StrictStr
-    description: Optional[StrictStr] = "No description available."
+    description: Optional[StrictStr] = "No description available"
     calories: int
 
 

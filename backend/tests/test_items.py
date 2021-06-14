@@ -1,37 +1,35 @@
 import json
 
-from tests.conftest import test_items
 
-
-def test_item_creation_success(test_client):
+def test_item_creation_success(test_client_authed, test_items):
     chicken, milk = test_items
 
-    response = test_client.post("/items/", data=json.dumps(chicken))
+    response = test_client_authed.post("/items/", data=json.dumps(chicken))
     assert response.status_code == 201
     assert response.json()["title"] == "chicken"
 
-    response = test_client.post("/items/", data=json.dumps(milk))
+    response = test_client_authed.post("/items/", data=json.dumps(milk))
     assert response.status_code == 201
     assert response.json()["title"] == "milk"
 
+
+def test_item_creation_no_description(test_client_authed):
     no_description = {"title": "test title", "calories": 0}
 
-    response = test_client.post("/items/", data=json.dumps(no_description))
+    response = test_client_authed.post("/items/", data=json.dumps(no_description))
     assert response.status_code == 201
-
-    response = test_client.get("/items/")
-    assert len(response.json()) == 3
+    assert response.json()["description"] == "No description available"
 
 
-def test_item_creation_failure(test_client):
+def test_item_creation_failure(test_client_authed):
     bad_title = {"title": None, "description": "test", "calories": 0}
 
-    response = test_client.post("/items/", data=json.dumps(bad_title))
+    response = test_client_authed.post("/items/", data=json.dumps(bad_title))
     assert response.status_code == 422
 
     bad_description = {"title": "test title", "description": 10, "calories": 0}
 
-    response = test_client.post("/items/", data=json.dumps(bad_description))
+    response = test_client_authed.post("/items/", data=json.dumps(bad_description))
     assert response.status_code == 422
 
     bad_calories = {
@@ -40,9 +38,19 @@ def test_item_creation_failure(test_client):
         "calories": None,
     }
 
-    response = test_client.post("/items/", data=json.dumps(bad_calories))
+    response = test_client_authed.post("/items/", data=json.dumps(bad_calories))
     assert response.status_code == 422
 
-    response = test_client.get("/items/")
+    response = test_client_authed.get("/items/")
     assert response.status_code == 200
     assert len(response.json()) == 0
+
+
+def test_item_creation_unauthed(test_client_unauthed, test_items):
+    chicken, milk = test_items
+
+    response = test_client_unauthed.post("/items/", data=json.dumps(chicken))
+    assert response.status_code == 401
+
+    response = test_client_unauthed.post("/items/", data=json.dumps(milk))
+    assert response.status_code == 401

@@ -60,7 +60,9 @@ async def read_user_me(skip: int = 0, limit: int = 100, db: Session = Depends(ge
 
 @router.post("/", response_model=schemas.User, status_code=201)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    return operations.create_user(db, user=user)
+    if operations.get_user_by_username(db, username=user.username) is None:
+        return operations.create_user(db, user=user)
+    raise HTTPException(status_code=400, detail="User already exists")
 
 
 @router.delete("/{user_id}", status_code=204)

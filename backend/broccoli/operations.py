@@ -54,7 +54,9 @@ def get_entries(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_entry(db: Session, user: schemas.User):
-    db_user = db.query(models.User).filter(models.User.id == user.id).first()
+    db_user = (
+        db.query(models.User).filter(models.User.username == user.username).first()
+    )
     db_entry = models.Entry(user_id=db_user.id)
     db_user.entries.append(db_entry)
     db.add(db_user)

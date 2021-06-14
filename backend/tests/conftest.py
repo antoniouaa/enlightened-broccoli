@@ -1,4 +1,5 @@
 import dotenv
+import datetime
 
 dotenv.load_dotenv()
 
@@ -9,22 +10,37 @@ from sqlalchemy.orm import sessionmaker
 
 from broccoli import create_app
 from broccoli.db import get_db
-from broccoli.models import Base, User
+from broccoli.models import Base, User, Entry
 from broccoli.security import get_current_user
 
-test_items = [
-    {
-        "title": "chicken",
-        "description": "delicious chicken thighs, high in fat",
-        "calories": 150,
-    },
-    {"title": "milk", "description": "cold full fat milk", "calories": 60},
-]
 
-test_users = [
-    {"username": "john", "email": "john@mail.com", "password": "sample1"},
-    {"username": "jane", "email": "jane@mail.com", "password": "sample2"},
-]
+@pytest.fixture(scope="function")
+def test_items():
+    return [
+        {
+            "title": "chicken",
+            "description": "delicious chicken thighs, high in fat",
+            "calories": 150,
+        },
+        {"title": "milk", "description": "cold full fat milk", "calories": 60},
+    ]
+
+
+@pytest.fixture(scope="function")
+def test_users():
+    return [
+        {"username": "john", "email": "john@mail.com", "password": "sample1"},
+        {"username": "jane", "email": "jane@mail.com", "password": "sample2"},
+    ]
+
+
+@pytest.fixture(scope="function")
+def db_user():
+    return {
+        "username": "antoniouaa",
+        "email": "antoniouaa@hotmail.com",
+        "hashed_password": "some_hashed_string",
+    }
 
 
 SQLALCHEMY_DATABASE_URL = (
@@ -32,14 +48,6 @@ SQLALCHEMY_DATABASE_URL = (
 )
 test_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
-
-
-def override_get_db():
-    try:
-        test_db = TestSessionLocal()
-        yield test_db
-    finally:
-        test_db.close()
 
 
 def override_get_current_user():
@@ -51,13 +59,47 @@ def override_get_current_user():
     return User(**authed_user)
 
 
+def mock_entry():
+    return Entry(user_id=1)
+
+
+def override_get_db():
+    test_db = TestSessionLocal()
+    try:
+        test_db.add(override_get_current_user())
+        test_db.add(mock_entry())
+        test_db.commit()
+        yield test_db
+    except:
+        test_db = TestSessionLocal()
+        yield test_db
+    finally:
+        test_db.close()
+
+
 app = create_app()
-app.dependency_overrides[get_db] = override_get_db
-app.dependency_overrides[get_current_user] = override_get_current_user
 
 
 @pytest.fixture(scope="function")
-def test_client():
+def test_client_authed(db_user):
+    app.dependency_overrides = {
+        get_current_user: override_get_current_user,
+        get_db: override_get_db,
+    }
     Base.metadata.create_all(bind=test_engine)
-    yield TestClient(app)
+    with TestClient(app) as test_client:
+        response = test_client.post("/users/", data=db_user)
+        response.status_code == 201
+        yield test_client
+    Base.metadata.drop_all(bind=test_engine)
+
+
+@pytest.fixture(scope="function")
+def test_client_unauthed(db_user):
+    app.dependency_overrides = {get_db: override_get_db}
+    Base.metadata.create_all(bind=test_engine)
+    with TestClient(app) as test_client:
+        response = test_client.post("/users/", data=db_user)
+        response.status_code == 201
+        yield test_client
     Base.metadata.drop_all(bind=test_engine)
