@@ -25,7 +25,6 @@ before_script:
 
 script:
   - poetry run task format
-  - poetry run task lint
   - poetry run pytest -V
   - poetry run task test --cov=broccoli tests/
 

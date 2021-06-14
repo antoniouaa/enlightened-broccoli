@@ -1,15 +1,12 @@
-import json
-
-
 def test_user_creation_success(test_client_unauthed, test_users):
     john, jane = test_users
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(john))
+    response = test_client_unauthed.post("/users/", json=john)
     assert response.status_code == 201
     assert response.json()["username"] == john["username"]
     assert response.json()["email"] == john["email"]
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(jane))
+    response = test_client_unauthed.post("/users/", json=jane)
     assert response.status_code == 201
     assert response.json()["username"] == jane["username"]
     assert response.json()["email"] == jane["email"]
@@ -22,22 +19,22 @@ def test_user_creation_success(test_client_unauthed, test_users):
 def test_user_creation_failure(test_client_unauthed):
     bad_username = {"email": "test@mail.com", "password": "sample"}
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(bad_username))
+    response = test_client_unauthed.post("/users/", json=bad_username)
     assert response.status_code == 422
 
     bad_email = {"username": "name", "password": "sample"}
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(bad_email))
+    response = test_client_unauthed.post("/users/", json=bad_email)
     assert response.status_code == 422
 
     bad_password = {"username": "sample", "email": "test@mail.com"}
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(bad_password))
+    response = test_client_unauthed.post("/users/", json=bad_password)
     assert response.status_code == 422
 
     int_field = {"username": 0, "email": "test@mail.com", "password": "sample"}
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(int_field))
+    response = test_client_unauthed.post("/users/", json=int_field)
     assert response.status_code == 422
 
     response = test_client_unauthed.get("/users/")
@@ -51,11 +48,11 @@ def test_user_creation_duplicate(test_client_unauthed, test_users):
     response = test_client_unauthed.get("/users/john")
     assert response.status_code == 404
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(john))
+    response = test_client_unauthed.post("/users/", json=john)
     assert response.status_code == 201
     assert response.json()["username"] == john["username"]
     assert response.json()["email"] == john["email"]
 
-    response = test_client_unauthed.post("/users/", data=json.dumps(john))
+    response = test_client_unauthed.post("/users/", json=john)
     assert response.status_code == 400
     assert response.json()["detail"] == "User already exists"
