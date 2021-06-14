@@ -1,6 +1,6 @@
 language: python
 python:
-  - 3.6
+  - "3.6"
 
 env:
   global:
@@ -24,10 +24,10 @@ before_script:
   - psql -c 'CREATE DATABASE test_broccoli;' -U postgres
 
 script:
-  - pwd
-  - poetry run black .
+  - poetry run task format
+  - poetry run task lint
   - poetry run pytest -V
-  - poetry run pytest --cov=broccoli tests/
+  - poetry run task test --cov=broccoli tests/
 
 after_success:
   - coveralls
