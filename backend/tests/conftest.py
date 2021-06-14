@@ -1,5 +1,5 @@
 import dotenv
-import datetime
+import os
 
 dotenv.load_dotenv()
 
@@ -43,9 +43,7 @@ def db_user():
     }
 
 
-SQLALCHEMY_DATABASE_URL = (
-    "postgresql+psycopg2://postgres:postgres@127.0.0.1:5432/test_broccoli"
-)
+SQLALCHEMY_DATABASE_URL = os.getenv("TEST_DB_CONNECTION")
 test_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
@@ -59,15 +57,15 @@ def override_get_current_user():
     return User(**authed_user)
 
 
-def mock_entry():
-    return Entry(user_id=1)
-
-
 def override_get_db():
     test_db = TestSessionLocal()
     try:
-        test_db.add(override_get_current_user())
-        test_db.add(mock_entry())
+        user = override_get_current_user()
+        test_db.add(user)
+        test_db.commit()
+        test_db.refresh(user)
+
+        test_db.add(Entry(user_id=user.id))
         test_db.commit()
         yield test_db
     except:
@@ -78,6 +76,7 @@ def override_get_db():
 
 
 app = create_app()
+Base.metadata.create_all(bind=test_engine)
 
 
 @pytest.fixture(scope="function")

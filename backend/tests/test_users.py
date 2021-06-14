@@ -48,6 +48,9 @@ def test_user_creation_failure(test_client_unauthed):
 def test_user_creation_duplicate(test_client_unauthed, test_users):
     john, _ = test_users
 
+    response = test_client_unauthed.get("/users/john")
+    assert response.status_code == 404
+
     response = test_client_unauthed.post("/users/", data=json.dumps(john))
     assert response.status_code == 201
     assert response.json()["username"] == john["username"]
