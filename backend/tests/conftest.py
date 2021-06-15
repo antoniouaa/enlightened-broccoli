@@ -29,8 +29,26 @@ def test_items():
 @pytest.fixture(scope="function")
 def test_users():
     return [
-        {"username": "john", "email": "john@mail.com", "password": "sample1"},
-        {"username": "jane", "email": "jane@mail.com", "password": "sample2"},
+        {
+            "username": "john",
+            "email": "john@mail.com",
+            "password": "sample1",
+            "height": 175,
+            "weight": 70,
+            "age": 25,
+            "sex": "male",
+            "goal": "gain",
+        },
+        {
+            "username": "jane",
+            "email": "jane@mail.com",
+            "password": "sample2",
+            "height": 160,
+            "weight": 60,
+            "age": 24,
+            "sex": "female",
+            "goal": "lose",
+        },
     ]
 
 
@@ -53,6 +71,11 @@ def override_get_current_user():
         "username": "antoniouaa",
         "email": "antoniouaa@hotmail.com",
         "hashed_password": "some_hashed_string",
+        "height": 175,
+        "weight": 70,
+        "age": 25,
+        "sex": "male",
+        "goal": "gain",
     }
     return User(**authed_user)
 
@@ -80,25 +103,21 @@ Base.metadata.create_all(bind=test_engine)
 
 
 @pytest.fixture(scope="function")
-def test_client_authed(db_user):
+def test_client_authed():
     app.dependency_overrides = {
         get_current_user: override_get_current_user,
         get_db: override_get_db,
     }
     Base.metadata.create_all(bind=test_engine)
     with TestClient(app) as test_client:
-        response = test_client.post("/users/", data=db_user)
-        response.status_code == 201
         yield test_client
     Base.metadata.drop_all(bind=test_engine)
 
 
 @pytest.fixture(scope="function")
-def test_client_unauthed(db_user):
+def test_client_unauthed():
     app.dependency_overrides = {get_db: override_get_db}
     Base.metadata.create_all(bind=test_engine)
     with TestClient(app) as test_client:
-        response = test_client.post("/users/", data=db_user)
-        response.status_code == 201
         yield test_client
     Base.metadata.drop_all(bind=test_engine)
