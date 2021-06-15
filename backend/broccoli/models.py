@@ -26,6 +26,7 @@ class User(Base):
     weight = Column(Float)
     age = Column(Integer)
     sex = Column(String)
+    goal = Column(String)
     entries = relationship("Entry", backref="user")
 
 

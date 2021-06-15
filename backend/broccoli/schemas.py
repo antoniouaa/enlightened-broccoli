@@ -54,12 +54,19 @@ class Sex(str, Enum):
     female = "female"
 
 
+class Goal(str, Enum):
+    lose = "lose"
+    maintain = "maintain"
+    gain = "gain"
+
+
 class UserCreate(UserBase):
     password: StrictStr
     height: float
     weight: float
     age: int
     sex: Sex
+    goal: Goal
 
 
 class User(UserBase):
@@ -69,6 +76,7 @@ class User(UserBase):
     weight: float
     age: int
     sex: Sex
+    goal: Goal
 
     class Config:
         orm_mode = True

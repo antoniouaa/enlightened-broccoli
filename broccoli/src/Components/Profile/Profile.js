@@ -63,7 +63,7 @@ export const Profile = () => {
 
   const maleBMR = 66.47 + 13.75 * +weight + 5.003 * +height - 6.755 * +age;
   const femaleBMR = 655.1 + 9.563 * +weight + 1.85 * +height - 4.676 * +age;
-  const BMR = Math.round(sex == "Male" ? maleBMR : femaleBMR);
+  const BMR = Math.round(sex == "male" ? maleBMR : femaleBMR);
   const caloric = (
     <Statistic name="Basal Metabolic Rate" stat={BMR} unit="kcal" />
   );

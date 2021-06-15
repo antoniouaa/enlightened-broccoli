@@ -38,36 +38,38 @@ export const loginUser = createAsyncThunk(
     const data = await response.json();
     if (response.status === 201) {
       const { token, user } = data;
-      return { user, token, isLoggedIn: true };
+      return { ...user, token, isLoggedIn: true };
     }
     throw new Error(data.detail);
   }
 );
 
-const testState = {
-  user: {
-    user: {
-      username: "antoniouaa",
-      email: "antoniouaa@hotmail.com",
-      weight: "68.4",
-      height: "175",
-      age: "25",
-      sex: "Male",
-      goals: 0,
-    },
-    isLoggedIn: true,
-  },
-  status: "succeeded",
-  error: "",
-};
+export const logoutUser = createAsyncThunk("logoutUser", async () => {
+  return { isLoggedIn: false };
+});
+
+// Structure of a logged in store
+// const testState = {
+//   user: {
+//     username: "antoniouaa",
+//     email: "antoniouaa@hotmail.com",
+//     weight: "68.4",
+//     height: "175",
+//     age: "25",
+//     sex: "Male",
+//     goals: 0,
+//     isLoggedIn: true,
+//   },
+//   status: "succeeded",
+//   error: "",
+// };
 
 const userSlice = createSlice({
   name: "user",
-  initialState: testState,
   initialState: {
     user: { isLoggedIn: false },
     status: "idle",
-    error: null,
+    error: "",
   },
   reducers: {},
   extraReducers: {
@@ -94,6 +96,18 @@ const userSlice = createSlice({
       state.error = action.error;
       state.status = "failed";
     },
+    [logoutUser.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [logoutUser.fulfilled]: (state, action) => {
+      state.user = action;
+      state.status = "succeeded";
+      state.error = "";
+    },
+    [logoutUser.rejected]: (state, action) => {
+      state.error = action.error;
+      state.status = "failed";
+    },
   },
 });
 
@@ -101,6 +115,6 @@ export const isUserLoggedIn = (state) => state.user.user.isLoggedIn;
 export const getError = (state) => state.user.error;
 export const getToken = (state) => state.user.user.token;
 export const getUser = (state) =>
-  isUserLoggedIn(state) ? state.user.user.user : null;
+  isUserLoggedIn(state) ? state.user.user : null;
 
 export default userSlice.reducer;

@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { isUserLoggedIn } from "../Actions/userSlice";
+import { isUserLoggedIn, logoutUser } from "../Actions/userSlice";
 import { COLORS } from "./StyledComponents";
 
 const Header = styled.header`
@@ -97,6 +97,9 @@ const Bar = styled.span`
 `;
 
 export const NavBar = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const menu = useRef(null);
   const hamburger = useRef(null);
   const loggedIn = useSelector(isUserLoggedIn);
@@ -111,6 +114,35 @@ export const NavBar = () => {
     menu.current.classList.remove("active");
   };
 
+  const onLogout = async () => {
+    const res = await dispatch(logoutUser());
+    if (res.error) {
+      alert(res.error.message);
+    }
+    history.push("/");
+  };
+
+  const Profile = (
+    <Link onClick={closeMenu} to="/profile">
+      Profile
+    </Link>
+  );
+
+  const Login = (
+    <Link onClick={closeMenu} to="/login">
+      Login
+    </Link>
+  );
+  const About = (
+    <Link onClick={closeMenu} to="/about">
+      About
+    </Link>
+  );
+  const Logout = (
+    <Link onClick={onLogout} to="/">
+      Log out
+    </Link>
+  );
   return (
     <Header>
       <Nav>
@@ -118,27 +150,9 @@ export const NavBar = () => {
           <Headline>enlightened broccoli</Headline>
         </Link>
         <NavMenu ref={menu}>
-          <NavItem>
-            {loggedIn ? (
-              <Link onClick={closeMenu} to="/profile">
-                Profile
-              </Link>
-            ) : (
-              <Link onClick={closeMenu} to="/login">
-                Login
-              </Link>
-            )}
-          </NavItem>
-          <NavItem>
-            <Link onClick={closeMenu} to="/about">
-              About
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link onClick={closeMenu} to="/contact">
-              Contact
-            </Link>
-          </NavItem>
+          <NavItem>{loggedIn ? Profile : Login}</NavItem>
+          <NavItem>{About}</NavItem>
+          {loggedIn && <NavItem>{Logout}</NavItem>}
         </NavMenu>
         <Hamburger ref={hamburger} onClick={openMenu}>
           <Bar></Bar>
