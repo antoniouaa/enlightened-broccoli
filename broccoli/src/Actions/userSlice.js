@@ -1,27 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const signUpUser = createAsyncThunk(
-  "signUpUser",
-  async ({ username, email, password }) => {
-    const urlParams = new URLSearchParams({
-      username: username,
-      email: email,
-      password: password,
-    });
-
-    const response = await fetch(`/users/signup`, {
-      method: "POST",
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-      body: urlParams,
-      redirect: "follow",
-    });
-    const data = await response.json();
-    if (response.status === 201) {
-      return { isLoggedIn: false };
-    }
-    throw new Error(data.detail);
+export const signUpUser = createAsyncThunk("signUpUser", async (userData) => {
+  const response = await fetch(`/users/signup`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(userData),
+    redirect: "follow",
+  });
+  const data = await response.json();
+  if (response.status === 201) {
+    return { isLoggedIn: false };
   }
-);
+  throw new Error(data.detail);
+});
 
 export const loginUser = createAsyncThunk(
   "loginUser",

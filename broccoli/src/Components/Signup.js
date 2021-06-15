@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import {
@@ -11,6 +13,7 @@ import {
   Form,
   COLORS,
 } from "./StyledComponents";
+import { loginUser, signUpUser } from "../Actions/userSlice";
 
 const ProgressBar = styled.ul`
   text-align: center;
@@ -118,6 +121,9 @@ const RadioButton = styled.input`
 `;
 
 export const SignUp = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const userInput = useRef(null);
   const passInput = useRef(null);
   const retypePassInput = useRef(null);
@@ -175,8 +181,28 @@ export const SignUp = () => {
     setCurrentFieldset(currentFieldset - 1);
   };
 
-  const onSubmitClick = () => {
-    alert("You need to complete the form!");
+  const onSubmitClick = async () => {
+    if (accountDetailsValid && personalDetailsValid) {
+      const res = await dispatch(
+        signUpUser({
+          username,
+          email,
+          password,
+          height,
+          weight,
+          age,
+          sex,
+          goal,
+        })
+      );
+      if (res.error) {
+        alert(res.error.message);
+      } else {
+        history.push("/login");
+      }
+    } else {
+      alert("You need to complete the form!");
+    }
   };
 
   const addValidationStyles = () => {

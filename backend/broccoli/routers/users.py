@@ -58,7 +58,7 @@ async def read_user_me(skip: int = 0, limit: int = 100, db: Session = Depends(ge
     return users
 
 
-@router.post("/", response_model=schemas.User, status_code=201)
+@router.post("/signup", response_model=schemas.User, status_code=201)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if operations.get_user_by_username(db, username=user.username) is None:
         return operations.create_user(db, user=user)
