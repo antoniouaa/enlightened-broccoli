@@ -22,7 +22,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ direction }) => direction || "column"};
   flex-wrap: wrap;
   justify-content: ${({ spacing }) => spacing || "space-around"};
   align-items: center;
@@ -113,4 +113,24 @@ export const Title = styled.span`
   width: 100%;
   display: block;
   padding-bottom: 51px;
+`;
+
+export const WrapIcon = styled.div`
+  padding-top: 90px;
+  padding-bottom: 90px;
+  display: flex;
+  flex: 1 2;
+
+  @media only screen and (max-width: 768px) {
+    padding-top: 15px;
+  }
+`;
+
+export const BroccoliImg = styled.img`
+  margin-right: 2rem;
+  left: 10rem;
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;

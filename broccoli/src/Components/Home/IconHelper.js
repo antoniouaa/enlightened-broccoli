@@ -6,30 +6,12 @@ import Broccoli from "../../Assets/broccoli.png";
 import {
   WrapSignUp,
   WrapInput,
+  WrapIcon,
   Input,
   StyledLink,
+  BroccoliImg,
   COLORS,
 } from "../StyledComponents";
-
-const WrapIcon = styled.div`
-  padding-top: 90px;
-  padding-bottom: 90px;
-  display: flex;
-  flex: 1 2;
-
-  @media only screen and (max-width: 768px) {
-    padding-top: 15px;
-  }
-`;
-
-const BroccoliImg = styled.img`
-  margin-right: 2rem;
-  left: 10rem;
-
-  @media only screen and (max-width: 768px) {
-    display: none;
-  }
-`;
 
 const WrapIconText = styled.div`
   margin: 2rem;

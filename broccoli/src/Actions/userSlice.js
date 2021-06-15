@@ -44,8 +44,26 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+const testState = {
+  user: {
+    user: {
+      username: "antoniouaa",
+      email: "antoniouaa@hotmail.com",
+      weight: "68.4",
+      height: "175",
+      age: "25",
+      sex: "Male",
+      goals: 0,
+    },
+    isLoggedIn: true,
+  },
+  status: "succeeded",
+  error: "",
+};
+
 const userSlice = createSlice({
   name: "user",
+  initialState: testState,
   initialState: {
     user: { isLoggedIn: false },
     status: "idle",
