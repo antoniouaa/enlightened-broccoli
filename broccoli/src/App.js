@@ -8,7 +8,7 @@ import Profile from "./Components/Profile/Profile";
 import LogIn from "./Components/LogIn";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
-import SignUp from "./Components/Signup";
+import SignUp from "./Components/Signup/Signup";
 
 function App() {
   return (

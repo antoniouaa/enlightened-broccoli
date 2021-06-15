@@ -48,7 +48,7 @@ export const Profile = () => {
     history.push("/login");
   }
 
-  const { username, height, weight, age, sex, goals } = user;
+  const { username, height, weight, age, sex, goal } = user;
   const userStats = {
     Height: height,
     Weight: weight,
@@ -56,18 +56,34 @@ export const Profile = () => {
     Sex: sex,
   };
 
-  const about = Object.entries(userStats).map(([name, stat]) => {
-    const unit = name === "Height" ? "cm" : name === "Weight" ? "kg" : "";
-    return <Statistic name={name} stat={stat} unit={unit} />;
-  });
-
   const maleBMR = 66.47 + 13.75 * +weight + 5.003 * +height - 6.755 * +age;
   const femaleBMR = 655.1 + 9.563 * +weight + 1.85 * +height - 4.676 * +age;
   const BMR = Math.round(sex === "male" ? maleBMR : femaleBMR);
+  const multipliers = {
+    sed: 1.2,
+    light: 1.375,
+    moderate: 1.55,
+    very: 1.75,
+    extreme: 1.95,
+  };
+  const extraCalories = {
+    lose: -500,
+    maintain: 0,
+    gain: 500,
+  };
+  const sedentaryCalories = Math.round(BMR * multipliers.sed);
+  const target = sedentaryCalories + extraCalories[goal];
+
+  const about = Object.entries(userStats).map(([name, stat]) => {
+    const unit = name === "Height" ? "cm" : name === "Weight" ? "kg" : "";
+    return <Statistic key={name} name={name} stat={stat} unit={unit} />;
+  });
   const caloric = (
     <Statistic name="Basal Metabolic Rate" stat={BMR} unit="kcal" />
   );
-  const target = Math.round(BMR * 1.2);
+  const sedentary = (
+    <Statistic name="Sedentary" stat={sedentaryCalories} unit="kcal" />
+  );
   const targetCalories = <Statistic name="Target" stat={target} unit="kcal" />;
 
   return (
@@ -84,6 +100,7 @@ export const Profile = () => {
         <Wrapper>
           <ProfileSubTitle>Caloric Needs</ProfileSubTitle>
           {caloric}
+          {sedentary}
           {targetCalories}
         </Wrapper>
       </Wrapper>

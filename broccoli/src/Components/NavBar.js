@@ -127,7 +127,11 @@ export const NavBar = () => {
       Profile
     </Link>
   );
-
+  const Entries = (
+    <Link onClick={closeMenu} to="/entries">
+      Entries
+    </Link>
+  );
   const Login = (
     <Link onClick={closeMenu} to="/login">
       Login
@@ -151,6 +155,7 @@ export const NavBar = () => {
         </Link>
         <NavMenu ref={menu}>
           <NavItem>{loggedIn ? Profile : Login}</NavItem>
+          <NavItem>{loggedIn ? Entries : ""}</NavItem>
           <NavItem>{About}</NavItem>
           {loggedIn && <NavItem>{Logout}</NavItem>}
         </NavMenu>

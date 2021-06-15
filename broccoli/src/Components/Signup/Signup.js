@@ -12,8 +12,8 @@ import {
   Title,
   Form,
   COLORS,
-} from "./StyledComponents";
-import { loginUser, signUpUser } from "../Actions/userSlice";
+} from "../StyledComponents";
+import { signUpUser } from "../../Actions/userSlice";
 
 const ProgressBar = styled.ul`
   text-align: center;
@@ -428,6 +428,7 @@ export const SignUp = () => {
                     id="lose"
                     name="goal"
                     value="lose"
+                    onClick={onGoalChange}
                   />
                   Lose weight
                 </label>
@@ -439,6 +440,7 @@ export const SignUp = () => {
                     id="maintain"
                     name="goal"
                     value="maintain"
+                    onClick={onGoalChange}
                     checked
                   />
                   Maintain weight
@@ -451,6 +453,7 @@ export const SignUp = () => {
                     id="gain"
                     name="goal"
                     value="gain"
+                    onClick={onGoalChange}
                   />
                   Gain weight
                 </label>
