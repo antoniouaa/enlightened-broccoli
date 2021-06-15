@@ -1,5 +1,6 @@
 import datetime
 from typing import Optional, List
+from enum import Enum
 
 from pydantic import BaseModel, StrictStr
 
@@ -48,13 +49,27 @@ class UserBase(BaseModel):
     email: StrictStr
 
 
+class Sex(str, Enum):
+    male = "male"
+    female = "female"
+
+
 class UserCreate(UserBase):
     password: StrictStr
+    height: float
+    weight: float
+    age: int
+    sex: Sex
 
 
 class User(UserBase):
     id: int
     created_at: datetime.datetime
+    height: float
+    weight: float
+    age: int
+    sex: Sex
 
     class Config:
         orm_mode = True
+        use_enum_values = True

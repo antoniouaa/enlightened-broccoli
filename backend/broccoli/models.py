@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from sqlalchemy.sql.schema import ForeignKey, Table
@@ -22,6 +22,10 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     created_at = Column(DateTime(timezone=True), default=func.now())
+    height = Column(Float)
+    weight = Column(Float)
+    age = Column(Integer)
+    sex = Column(String)
     entries = relationship("Entry", backref="user")
 
 
