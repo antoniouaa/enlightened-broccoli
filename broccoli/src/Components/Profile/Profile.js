@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { getUser } from "../../Actions/userSlice";
-import profile from "../../Assets/carrot.png";
+import carrot from "../../Assets/carrot.png";
+import onion from "../../Assets/onion.png";
 import {
   Container,
   Wrapper,
@@ -67,12 +68,12 @@ export const Profile = () => {
     extreme: 1.95,
   };
   const extraCalories = {
-    lose: -500,
-    maintain: 0,
-    gain: 500,
+    lose: 0.8,
+    maintain: 1,
+    gain: 1.2,
   };
   const sedentaryCalories = Math.round(BMR * multipliers.sed);
-  const target = sedentaryCalories + extraCalories[goal];
+  const target = Math.round(sedentaryCalories * extraCalories[goal]);
 
   const about = Object.entries(userStats).map(([name, stat]) => {
     const unit = name === "Height" ? "cm" : name === "Weight" ? "kg" : "";
@@ -90,7 +91,7 @@ export const Profile = () => {
     <ProfileContainer>
       <Wrapper direction="row" spacing="center">
         <Wrapper direction="column">
-          <ProfileIcon src={profile} />
+          <ProfileIcon src={sex === "male" ? carrot : onion} />
           <p>@{username}</p>
         </Wrapper>
         <Wrapper>
