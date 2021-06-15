@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 
 import {
   Container,
@@ -13,112 +12,18 @@ import {
   Form,
   COLORS,
 } from "../StyledComponents";
+import {
+  ProgressBar,
+  Step,
+  FormStep,
+  FormLabel,
+  ButtonWrap,
+  SexSelect,
+  SmallButton,
+  RadioButton,
+  WrapRadio,
+} from "./SignupComponents";
 import { signUpUser } from "../../Actions/userSlice";
-
-const ProgressBar = styled.ul`
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
-  overflow: hidden;
-  counter-reset: step;
-`;
-
-const Step = styled.li`
-  color: ${COLORS.titleColor};
-  text-transform: uppercase;
-  font-size: 12px;
-  width: 33.33%;
-  float: left;
-  position: relative;
-
-  &:before {
-    content: counter(step);
-    counter-increment: step;
-    width: 20px;
-    line-height: 20px;
-    display: block;
-    font-size: 15px;
-    color: ${COLORS.styledLinkColor};
-    background-color: #fff;
-    border-radius: 3px;
-    margin: 0 auto 5px auto;
-  }
-
-  &.active:before,
-  &.active:after {
-    background-color: ${COLORS.buttonColor};
-    color: #fff;
-  }
-`;
-
-const FormStep = styled.fieldset`
-  background-color: ${COLORS.defaultWrapInputColor};
-  width: 100%;
-  height: 100%;
-  border: 0 none;
-  border-radius: 3px;
-  padding: 0;
-  display: none;
-
-  &.active {
-    display: block;
-  }
-`;
-
-const ButtonWrap = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  flex: 1 1;
-`;
-
-const SmallButton = styled(WrapInput)`
-  width: 100%;
-  margin-right: ${({ marginRight }) => marginRight || "0px"};
-  margin-left: ${({ marginLeft }) => marginLeft || "0px"};
-`;
-
-const FormLabel = styled.p`
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-const SexSelect = styled.select`
-  color: ${({ textColor }) => textColor || COLORS.inputBackgroundColor};
-  font-weight: ${({ textHeavy }) => textHeavy || 400};
-  height: 62px;
-  background-color: #fff;
-  letter-spacing: 0.1rem;
-  font-size: 18px;
-  display: block;
-  width: 100%;
-  border: none;
-
-  option {
-    color: ${COLORS.inputBackgroundColor};
-  }
-`;
-
-const WrapRadio = styled.div`
-  width: 100%;
-  height: auto;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 48px;
-  position: relative;
-  border: 1px solid ${COLORS.buttonColor};
-  border-radius: 5px;
-  padding: 3px;
-  background-color: #fff;
-  margin-bottom: 10px;
-  font-size: 18px;
-`;
-
-const RadioButton = styled.input`
-  margin: 0 5px 0 5px;
-`;
 
 export const SignUp = () => {
   const history = useHistory();
@@ -139,15 +44,17 @@ export const SignUp = () => {
   const personalDetails = useRef(null);
   const submitForm = useRef(null);
 
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [age, setAge] = useState("");
-  const [sex, setSex] = useState("");
-  const [goal, setGoal] = useState("maintain");
+  const [userState, setUserState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    retypePassword: "",
+    height: "",
+    weight: "",
+    age: "",
+    sex: "",
+    goal: "maintain",
+  });
 
   const [currentFieldset, setCurrentFieldset] = useState(0);
 
@@ -183,18 +90,7 @@ export const SignUp = () => {
 
   const onSubmitClick = async () => {
     if (accountDetailsValid && personalDetailsValid) {
-      const res = await dispatch(
-        signUpUser({
-          username,
-          email,
-          password,
-          height,
-          weight,
-          age,
-          sex,
-          goal,
-        })
-      );
+      const res = await dispatch(signUpUser(userState));
       if (res.error) {
         alert(res.error.message);
       } else {
@@ -227,56 +123,28 @@ export const SignUp = () => {
     ageInput.current.classList.remove("invalid");
   };
 
-  const onUsernameChange = (e) => {
+  const onStateChange = (e) => {
     removeValidationStyles();
-    setUsername(e.target.value);
-  };
-
-  const onPasswordChange = (e) => {
-    removeValidationStyles();
-    setPassword(e.target.value);
-  };
-
-  const onEmailChange = (e) => {
-    removeValidationStyles();
-    setEmail(e.target.value);
-  };
-
-  const onRetypePassword = (e) => {
-    removeValidationStyles();
-    setRetypePassword(e.target.value);
+    const key = e.target.id;
+    const val = e.target.value;
+    setUserState({ ...userState, [key]: val });
   };
 
   const checkEqualPasswords = () => {
-    return retypePassword === password;
+    return userState.retypePassword === userState.password;
   };
 
   const accountDetailsValid =
     checkEqualPasswords() &&
-    Boolean(username) &&
-    Boolean(password) &&
-    Boolean(email);
+    Boolean(userState.username) &&
+    Boolean(userState.password) &&
+    Boolean(userState.email);
 
   const personalDetailsValid =
-    Boolean(height) && Boolean(sex) && Boolean(weight) && Boolean(age);
-
-  const onHeightChange = (e) => {
-    removeValidationStyles();
-    setHeight(e.target.value);
-  };
-  const onWeightChange = (e) => {
-    removeValidationStyles();
-    setWeight(e.target.value);
-  };
-  const onSexChange = (e) => {
-    removeValidationStyles();
-    setSex(e.target.value);
-  };
-  const onAgeChange = (e) => {
-    removeValidationStyles();
-    setAge(e.target.value);
-  };
-  const onGoalChange = (e) => setGoal(e.target.value);
+    Boolean(userState.height) &&
+    Boolean(userState.sex) &&
+    Boolean(userState.weight) &&
+    Boolean(userState.age);
 
   return (
     <Container>
@@ -296,18 +164,18 @@ export const SignUp = () => {
               <WrapInput ref={emailInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="email"
-                  value={email}
+                  value={userState.email}
                   placeholder="Email"
-                  onChange={onEmailChange}
+                  onChange={onStateChange}
                   required
                 />
               </WrapInput>
               <WrapInput ref={userInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="username"
-                  value={username}
+                  value={userState.username}
                   placeholder="Username"
-                  onChange={onUsernameChange}
+                  onChange={onStateChange}
                   required
                 />
               </WrapInput>
@@ -315,9 +183,9 @@ export const SignUp = () => {
                 <Input
                   type="password"
                   id="password"
-                  value={password}
+                  value={userState.password}
                   placeholder="Password"
-                  onChange={onPasswordChange}
+                  onChange={onStateChange}
                   required
                 />
               </WrapInput>
@@ -326,10 +194,10 @@ export const SignUp = () => {
                 bgColor={COLORS.defaultBackground}>
                 <Input
                   type="password"
-                  id="retypepassword"
-                  value={retypePassword}
+                  id="retypePassword"
+                  value={userState.retypePassword}
                   placeholder="Confirm Password"
-                  onChange={onRetypePassword}
+                  onChange={onStateChange}
                   required
                 />
               </WrapInput>
@@ -348,9 +216,9 @@ export const SignUp = () => {
               <WrapInput ref={heightInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="height"
-                  value={height}
+                  value={userState.height}
                   placeholder="Height (cm)"
-                  onChange={onHeightChange}
+                  onChange={onStateChange}
                   required
                 />
               </WrapInput>
@@ -360,10 +228,10 @@ export const SignUp = () => {
                   bgColor={COLORS.defaultBackground}
                   marginRight="10px">
                   <Input
-                    id="Age"
-                    value={age}
+                    id="age"
+                    value={userState.age}
                     placeholder="Age"
-                    onChange={onAgeChange}
+                    onChange={onStateChange}
                     required
                   />
                 </SmallButton>
@@ -374,7 +242,7 @@ export const SignUp = () => {
                   <SexSelect
                     name="sex"
                     id="sex"
-                    onChange={onSexChange}
+                    onChange={onStateChange}
                     required>
                     <option hidden>Sex</option>
                     <option value="male">Male</option>
@@ -385,9 +253,9 @@ export const SignUp = () => {
               <WrapInput ref={weightInput} bgColor={COLORS.defaultBackground}>
                 <Input
                   id="weight"
-                  value={weight}
+                  value={userState.weight}
                   placeholder="Weight (kg)"
-                  onChange={onWeightChange}
+                  onChange={onStateChange}
                   required
                 />
               </WrapInput>
@@ -428,7 +296,7 @@ export const SignUp = () => {
                     id="lose"
                     name="goal"
                     value="lose"
-                    onClick={onGoalChange}
+                    onClick={onStateChange}
                   />
                   Lose weight
                 </label>
@@ -440,7 +308,7 @@ export const SignUp = () => {
                     id="maintain"
                     name="goal"
                     value="maintain"
-                    onClick={onGoalChange}
+                    onClick={onStateChange}
                     checked
                   />
                   Maintain weight
@@ -453,7 +321,7 @@ export const SignUp = () => {
                     id="gain"
                     name="goal"
                     value="gain"
-                    onClick={onGoalChange}
+                    onClick={onStateChange}
                   />
                   Gain weight
                 </label>
