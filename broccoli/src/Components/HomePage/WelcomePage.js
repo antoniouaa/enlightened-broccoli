@@ -31,7 +31,7 @@ const Headline = styled.h1`
   color: ${({ isBlue }) => isBlue || COLORS.titleGreyColor};
 `;
 
-export const IconHelper = () => {
+export const Welcome = () => {
   const history = useHistory();
 
   return (
@@ -42,11 +42,11 @@ export const IconHelper = () => {
         <Headline>and macronutrient </Headline>
         <Headline isBlue={COLORS.buttonColor}>tracking for dummies</Headline>
         <WrapSignUp>
-          <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
+          <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
             <Input
-              type="button"
-              value="Sign up - for free"
-              textColor="#fff"
+              type='button'
+              value='Sign up - for free'
+              textColor='#fff'
               onClick={() => history.push("/signup")}
             />
           </WrapInput>

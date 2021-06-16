@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getToken } from "../../Actions/userSlice";
 import { getEntries, getUserEntries } from "../../Actions/entriesSlice";
-import { Container } from "../StyledComponents";
-import { EntrySummary } from "./Entry";
+import { Container, Wrapper } from "../StyledComponents";
+import { EntryLink } from "./EntryLink";
 
 export const EntryList = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,10 @@ export const EntryList = () => {
     }
   }, []);
 
-  const entryItems = ent.map((entry) => <EntrySummary {...entry} />);
-  return <Container>{entryItems}</Container>;
+  const entryItems = ent.map((entry) => <EntryLink {...entry} />);
+  return (
+    <Container>
+      <Wrapper>{entryItems}</Wrapper>
+    </Container>
+  );
 };
-
-export default EntryList;

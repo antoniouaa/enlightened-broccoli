@@ -1,4 +1,5 @@
 import { EntryList } from "./EntryList";
-import { Entry } from "./Entry";
+import { EntryLink } from "./EntryLink";
+import { EntryCreate } from "./EntryCreate";
 
-export { EntryList, Entry };
+export { EntryList, EntryLink, EntryCreate };
