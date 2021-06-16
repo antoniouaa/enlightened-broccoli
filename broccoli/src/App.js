@@ -9,6 +9,7 @@ import LogIn from "./Components/LogIn";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
 import SignUp from "./Components/Signup/Signup";
+import { Entries } from "./Components/Entries/Entries";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/entries" component={Entries} />
           <Route exact path="/" component={Home} />
         </Switch>
         <Footer />

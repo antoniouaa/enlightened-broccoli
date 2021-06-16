@@ -43,7 +43,7 @@ async def update_entry(
 
     entry_id = entry_updates.entry_id
     item_id = entry_updates.item_id
-    operations.update_entry(db, entry_id=entry_id, item_id=item_id, user=user)
+    operations.update_entry(db, entry_id=entry_id, item_id=item_id)
 
 
 @router.get("/{entry_id}/items", response_model=List[schemas.Item], status_code=200)

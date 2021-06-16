@@ -28,8 +28,8 @@ export const loginUser = createAsyncThunk(
     });
     const data = await response.json();
     if (response.status === 201) {
-      const { token, user } = data;
-      return { ...user, token, isLoggedIn: true };
+      const { access_token, user } = data;
+      return { ...user, token: access_token, isLoggedIn: true };
     }
     throw new Error(data.detail);
   }
@@ -49,6 +49,7 @@ export const logoutUser = createAsyncThunk("logoutUser", async () => {
 //     age: "25",
 //     sex: "Male",
 //     goals: 0,
+//     token: token_here,
 //     isLoggedIn: true,
 //   },
 //   status: "succeeded",
