@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Home from "./Components/Home/Home";
+import Home from "./Components/Home";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
-import Profile from "./Components/Profile/Profile";
+import Profile from "./Components/Profile";
 import LogIn from "./Components/LogIn";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
-import SignUp from "./Components/Signup/Signup";
-import { Entries } from "./Components/Entries/Entries";
+import SignUp from "./Components/Signup";
+import { Entries } from "./Components/Entries";
 
 function App() {
   return (
