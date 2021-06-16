@@ -6,7 +6,7 @@ import { getEntries, getUserEntries } from "../../Actions/entriesSlice";
 import { Container } from "../StyledComponents";
 import { EntrySummary } from "./Entry";
 
-export const Entries = () => {
+export const EntryList = () => {
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const ent = useSelector(getEntries);
@@ -22,4 +22,4 @@ export const Entries = () => {
   return <Container>{entryItems}</Container>;
 };
 
-export default Entries;
+export default EntryList;

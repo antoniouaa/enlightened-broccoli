@@ -23,10 +23,10 @@ function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/signup" component={SignUp} />
-          <ProtectedRoute path="/profile">
+          <ProtectedRoute exact path="/profile">
             <Profile />
           </ProtectedRoute>
-          <ProtectedRoute path="/entries">
+          <ProtectedRoute exact path="/entries">
             <EntryList />
           </ProtectedRoute>
           <Route exact path="/" component={Home} />
