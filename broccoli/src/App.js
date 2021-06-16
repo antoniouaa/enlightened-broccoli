@@ -10,6 +10,7 @@ import Contact from "./Components/Contact";
 import About from "./Components/About";
 import SignUp from "./Components/Signup";
 import { Entries } from "./Components/Entries";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   return (
@@ -19,11 +20,18 @@ function App() {
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={LogIn} />
-          <Route exact path="/profile" component={Profile} />
           <Route exact path="/about" component={About} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/entries" component={Entries} />
+
+          <ProtectedRoute path="/profile">
+            <Profile />
+          </ProtectedRoute>
+          <ProtectedRoute path="/entries">
+            <Entries />
+          </ProtectedRoute>
+          {/* <Route exact path="/profile" component={Profile} /> */}
+          {/* <Route exact path="/entries" component={Entries} /> */}
           <Route exact path="/" component={Home} />
         </Switch>
         <Footer />
