@@ -142,6 +142,11 @@ export const NavBar = () => {
       About
     </Link>
   );
+  const Contact = (
+    <Link onClick={closeMenu} to="/contact">
+      Contact
+    </Link>
+  );
   const Logout = (
     <Link onClick={onLogout} to="/">
       Log out
@@ -155,8 +160,9 @@ export const NavBar = () => {
         </Link>
         <NavMenu ref={menu}>
           <NavItem>{loggedIn ? Profile : Login}</NavItem>
-          <NavItem>{loggedIn ? Entries : ""}</NavItem>
+          {loggedIn && <NavItem>{Entries}</NavItem>}
           <NavItem>{About}</NavItem>
+          <NavItem>{Contact}</NavItem>
           {loggedIn && <NavItem>{Logout}</NavItem>}
         </NavMenu>
         <Hamburger ref={hamburger} onClick={openMenu}>

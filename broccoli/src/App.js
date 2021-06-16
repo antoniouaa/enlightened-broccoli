@@ -9,7 +9,7 @@ import LogIn from "./Components/LogIn";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
 import SignUp from "./Components/Signup";
-import { Entries } from "./Components/Entries";
+import { EntryList } from "./Components/Entries";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
@@ -23,15 +23,12 @@ function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/signup" component={SignUp} />
-
           <ProtectedRoute path="/profile">
             <Profile />
           </ProtectedRoute>
           <ProtectedRoute path="/entries">
-            <Entries />
+            <EntryList />
           </ProtectedRoute>
-          {/* <Route exact path="/profile" component={Profile} /> */}
-          {/* <Route exact path="/entries" component={Entries} /> */}
           <Route exact path="/" component={Home} />
         </Switch>
         <Footer />
@@ -41,3 +38,8 @@ function App() {
 }
 
 export default App;
+
+//https://reactrouter.com/web/example/animated-transitions
+// Add CSS transitions between routes
+
+// Complete the EntryBox styles
