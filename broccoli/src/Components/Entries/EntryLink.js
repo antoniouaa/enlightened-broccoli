@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { Wrapper, COLORS } from "../StyledComponents";
 import { getUser } from "../../Actions/userSlice";
-import { dateFormat } from "../utils";
+import { dateFormat } from "../../utils";
 
 const EntryBox = styled.div`
   padding: 1rem;

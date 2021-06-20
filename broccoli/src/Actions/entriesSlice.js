@@ -18,6 +18,15 @@ export const getUserEntries = createAsyncThunk(
   }
 );
 
+export const createEntry = createAsyncThunk("createEntry", async () => {});
+
+export const addItemToEntry = createAsyncThunk(
+  "addItemToEntry",
+  async (itemId) => {
+    console.log(itemId);
+  }
+);
+
 const entriesSlice = createSlice({
   name: "entries",
   initialState: {

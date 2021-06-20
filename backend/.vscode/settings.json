@@ -1,3 +1,4 @@
 {
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "python.pythonPath": "C:\\Users\\anton\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\enlightened-broccoli-sxmkP_7b-py3.7\\Scripts\\python.exe"
 }

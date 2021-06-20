@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import { getItems } from "../Actions/itemsSlice";
 import { loginUser } from "../Actions/userSlice";
 import {
   Container,
@@ -61,7 +62,8 @@ export const LogIn = () => {
       setPassword("");
       return;
     }
-    history.push("/");
+    await dispatch(getItems());
+    history.push("/entries/create");
   };
 
   return (
@@ -72,29 +74,29 @@ export const LogIn = () => {
             <Title>Log in</Title>
             <WrapInput ref={userInput} bgColor={COLORS.defaultBackground}>
               <Input
-                id="username"
+                id='username'
                 value={username}
-                placeholder="Username"
+                placeholder='Username'
                 onChange={onUsernameChange}
                 required
               />
             </WrapInput>
             <WrapInput ref={passInput} bgColor={COLORS.defaultBackground}>
               <Input
-                type="password"
-                id="password"
+                type='password'
+                id='password'
                 value={password}
                 onChange={onPasswordChange}
-                placeholder="Password"
+                placeholder='Password'
                 required
               />
             </WrapInput>
-            <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
+            <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
               <Input
-                textColor="#fff"
-                textHeavy="500"
-                type="button"
-                value="LOG IN"
+                textColor='#fff'
+                textHeavy='500'
+                type='button'
+                value='LOG IN'
                 onClick={onLoginClick}
               />
             </WrapInput>
