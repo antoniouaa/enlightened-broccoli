@@ -89,9 +89,15 @@ export const EntryCreate = () => {
   };
 
   const onFormSubmit = async (e) => {
-    e.preventDefault();
-    const res = await dispatch(addItemToEntry(addedItems));
-    if (res.error) return;
+    if (addedItems.length > 0) {
+      const res = await dispatch(
+        addItemToEntry({ items: addedItems, token, id })
+      );
+      if (res.error) return;
+      alert("Items added!");
+    } else {
+      alert("Items not added!");
+    }
   };
 
   return (
@@ -103,7 +109,7 @@ export const EntryCreate = () => {
         ))}
       </AddedItems>
       <EntryFormWrapper>
-        <Form onSubmit={onFormSubmit}>
+        <Form onSubmit={(e) => e.preventDefault()}>
           <Title>Create a new entry</Title>
           <SearchBar bgColor={COLORS.defaultBackground}>
             <ItemSearch
@@ -111,7 +117,7 @@ export const EntryCreate = () => {
               placeholder='Search items'
               onChange={onUserInput}
             />
-            <button>Submit</button>
+            <button onClick={onFormSubmit}>Submit</button>
           </SearchBar>
           <ul>
             {filtered.map((item, key) => (
@@ -135,7 +141,7 @@ const EntryListItem = ({ title, description, calories, id, addItem }) => {
   const dispatch = useDispatch();
 
   const onAddClick = (id) => {
-    addItem({ title, description, calories });
+    addItem({ title, description, calories, id });
     dispatch(addItemToEntry(id));
   };
 
