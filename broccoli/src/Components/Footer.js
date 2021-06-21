@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { COLORS } from "./StyledComponents";
 
 const FooterWrapper = styled.footer`
-  height: 3rem;
-  bottom: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,8 +12,14 @@ const FooterWrapper = styled.footer`
   position: fixed;
   left: 0px;
   right: 0px;
+  height: 3rem;
+  bottom: 0px;
 
   color: ${COLORS.titleColor};
+
+  @media only screen and (max-width: 768px) {
+    position: relative;
+  }
 `;
 
 export const Footer = () => {

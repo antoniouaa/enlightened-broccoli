@@ -26,6 +26,14 @@ const AboutWrapper = styled(Wrapper)`
     color: ${COLORS.titleGreyColor};
     margin: 0 0 2rem 0;
   }
+
+  @media only screen and (max-width: 768px) {
+    margin-top: 0;
+    & > ${Article} {
+      width: 18rem;
+      text-align: justify;
+    }
+  }
 `;
 
 const ChickenImg = styled(BroccoliImg)`
