@@ -18,7 +18,10 @@ export const EntryList = () => {
     }
   }, []);
 
-  const entryItems = ent.map((entry) => <EntryLink {...entry} />);
+  const entryItems = ent
+    .slice()
+    .reverse()
+    .map((entry) => <EntryLink {...entry} />);
   return (
     <Container>
       <Wrapper>{entryItems}</Wrapper>

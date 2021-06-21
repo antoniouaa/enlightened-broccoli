@@ -29,7 +29,7 @@ function App() {
           <ProtectedRoute exact path='/entries'>
             <EntryList />
           </ProtectedRoute>
-          <ProtectedRoute exact path='/entries/create'>
+          <ProtectedRoute exact path='/entries/:id/edit'>
             <EntryCreate />
           </ProtectedRoute>
           <Route exact path='/' component={Home} />

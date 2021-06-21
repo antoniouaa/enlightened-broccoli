@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { FiPlus } from "react-icons/fi";
 import { fetchItems } from "../../Actions/itemsSlice";
-import { addItemToEntry } from "../../Actions/entriesSlice";
+import { addItemToEntry, getEntryItems } from "../../Actions/entriesSlice";
 
 import {
   Title,
@@ -15,6 +16,7 @@ import {
   COLORS,
   Container,
 } from "../StyledComponents";
+import { getToken } from "../../Actions/userSlice";
 
 const CreateWrapper = styled(Container)`
   display: flex;
@@ -38,18 +40,60 @@ const ItemSearch = styled(Input)`
   color: ${COLORS.titleGreyColor};
 `;
 
+const SearchBar = styled(WrapInput)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+
+  & > button {
+    height: 80%;
+    margin: 0 0.5rem 0 0.5rem;
+    width: 6rem;
+    align-self: center;
+
+    border: 0;
+    background: none;
+    background-color: ${COLORS.greenSubmitButtonColor};
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+
+    :hover {
+      cursor: pointer;
+      background-color: ${COLORS.greenSubmitButtonColorHover};
+    }
+  }
+`;
+
 export const EntryCreate = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   const allItems = useSelector(fetchItems);
-  const userInput = useRef(null);
+  const token = useSelector(getToken);
   const [filtered, setFiltered] = useState([]);
   const [addedItems, setAddedItems] = useState([]);
 
   const appendItem = (item) => setAddedItems([...addedItems, item]);
 
-  useEffect(() => setFiltered(allItems), []);
+  useEffect(async () => {
+    setFiltered(allItems);
+    const res = await dispatch(getEntryItems({ token, id }));
+    if (res.error) return;
+    setAddedItems(res.payload || []);
+  }, []);
 
   const onUserInput = (e) => {
     setFiltered(allItems.filter((item) => item.title.includes(e.target.value)));
+  };
+
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    console.log(addedItems);
+    const res = await dispatch(addItemToEntry(addedItems));
+    if (res.error) return;
+    console.log(res);
   };
 
   return (
@@ -61,16 +105,16 @@ export const EntryCreate = () => {
         ))}
       </AddedItems>
       <EntryFormWrapper>
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={onFormSubmit}>
           <Title>Create a new entry</Title>
-          <WrapInput bgColor={COLORS.defaultBackground}>
+          <SearchBar bgColor={COLORS.defaultBackground}>
             <ItemSearch
-              ref={userInput}
               id='item'
               placeholder='Search items'
               onChange={onUserInput}
             />
-          </WrapInput>
+            <button>Submit</button>
+          </SearchBar>
           <ul>
             {filtered.map((item, key) => (
               <EntryListItem key={key} addItem={appendItem} {...item} />

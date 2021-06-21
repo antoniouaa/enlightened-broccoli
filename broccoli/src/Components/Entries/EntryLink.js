@@ -20,7 +20,7 @@ export const EntryLink = ({ id, created_at, user_id }) => {
 
   return (
     <Wrapper>
-      <Link to={`/entries/${id}`}>
+      <Link to={`/entries/${id}/edit`}>
         <EntryBox>
           <p> Entry: {id} </p>
           <p> Created on: {createdAt} </p>

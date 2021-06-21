@@ -63,7 +63,7 @@ export const LogIn = () => {
       return;
     }
     await dispatch(getItems());
-    history.push("/entries/create");
+    history.push("/entries");
   };
 
   return (
