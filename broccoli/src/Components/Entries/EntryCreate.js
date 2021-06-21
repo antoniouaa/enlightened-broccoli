@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { FiPlus } from "react-icons/fi";
 import { fetchItems } from "../../Actions/itemsSlice";
 import { addItemToEntry, getEntryItems } from "../../Actions/entriesSlice";
 
@@ -16,6 +15,7 @@ import {
   COLORS,
   Container,
 } from "../StyledComponents";
+import { EntryListItem } from "./EntryListItem";
 import { getToken } from "../../Actions/userSlice";
 
 const CreateWrapper = styled(Container)`
@@ -127,36 +127,5 @@ export const EntryCreate = () => {
         </Form>
       </EntryFormWrapper>
     </CreateWrapper>
-  );
-};
-
-const EntryItemContainer = styled(Container)`
-  margin: 0.5rem 0 0.5rem 0;
-  padding: 0.5rem;
-  background-color: ${COLORS.defaultWrapInputColor};
-  border-radius: 4px;
-`;
-
-const EntryListItem = ({ title, description, calories, id, addItem }) => {
-  const dispatch = useDispatch();
-
-  const onAddClick = (id) => {
-    addItem({ title, description, calories, id });
-    dispatch(addItemToEntry(id));
-  };
-
-  return (
-    <EntryItemContainer>
-      <span>
-        {title}
-        {calories} kcal
-      </span>
-      <p>{description}</p>
-      {addItem && (
-        <button onClick={(e) => onAddClick(id)}>
-          <FiPlus />
-        </button>
-      )}
-    </EntryItemContainer>
   );
 };
