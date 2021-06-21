@@ -42,8 +42,8 @@ async def update_entry(
         raise HTTPException(status_code=401, detail="You are not logged in")
 
     entry_id = entry_updates.entry_id
-    item_id = entry_updates.item_id
-    operations.update_entry(db, entry_id=entry_id, item_id=item_id)
+    items = entry_updates.items
+    operations.update_entry(db, entry_id=entry_id, items=items)
 
 
 @router.get("/{entry_id}/items", response_model=List[schemas.Item], status_code=200)

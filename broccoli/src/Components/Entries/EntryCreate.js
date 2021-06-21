@@ -90,10 +90,8 @@ export const EntryCreate = () => {
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(addedItems);
     const res = await dispatch(addItemToEntry(addedItems));
     if (res.error) return;
-    console.log(res);
   };
 
   return (

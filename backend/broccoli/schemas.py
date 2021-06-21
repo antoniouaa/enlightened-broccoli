@@ -32,7 +32,7 @@ class EntryCreate(EntryBase):
 
 class EntryPatch(BaseModel):
     entry_id: int
-    item_id: int
+    items: List[int]
 
 
 class Entry(EntryBase):

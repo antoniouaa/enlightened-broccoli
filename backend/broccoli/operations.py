@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy.orm import Session
 
 from broccoli import models, schemas
@@ -65,10 +67,11 @@ def create_entry(db: Session, user: schemas.User):
     return db_entry
 
 
-def update_entry(db: Session, entry_id: int, item_id: int):
-    db_item = db.query(models.Item).filter(models.Item.id == item_id).first()
+def update_entry(db: Session, entry_id: int, items: List[int]):
     db_entry = db.query(models.Entry).get(entry_id)
-    db_entry.items.append(db_item)
+    db_items = db.query(models.Item).filter(models.Item.id.in_(items)).all()
+    for db_item in db_items:
+        db_entry.items.append(db_item)
     db.add(db_entry)
     db.commit()
 
