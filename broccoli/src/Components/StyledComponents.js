@@ -121,8 +121,11 @@ export const WrapIcon = styled.div`
   display: flex;
   flex: 1 2;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1024px) {
+    flex-direction: column-reverse;
     padding-top: 15px;
+    align-items: center;
+    justify-content: space-between;
   }
 `;
 
@@ -130,7 +133,12 @@ export const BroccoliImg = styled.img`
   margin-right: 2rem;
   left: 10rem;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1024px) {
+    display: block;
+    width: 300px;
+  }
+
+  @media only screen and (max-width: 767px) {
     display: none;
   }
 `;

@@ -19,6 +19,8 @@ const FooterWrapper = styled.footer`
 
   @media only screen and (max-width: 768px) {
     position: relative;
+    margin: 0;
+    padding: 0;
   }
 `;
 

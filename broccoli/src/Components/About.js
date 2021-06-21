@@ -10,14 +10,12 @@ const Article = styled.article`
 
 const AboutWrapper = styled(Wrapper)`
   text-align: center;
-  margin-top: 2rem;
 
   h3 {
     font-size: 26px;
     font-weight: 500;
     letter-spacing: 0.2rem;
     color: ${COLORS.styledLinkColor};
-    margin: 2rem 0 0 0;
   }
 
   h4 {
@@ -28,9 +26,16 @@ const AboutWrapper = styled(Wrapper)`
   }
 
   @media only screen and (max-width: 768px) {
-    margin-top: 0;
+    margin: 0;
     & > ${Article} {
       width: 18rem;
+      text-align: justify;
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    margin: 0;
+    & > ${Article} {
+      width: 30rem;
       text-align: justify;
     }
   }

@@ -11,12 +11,14 @@ const Header = styled.header`
 `;
 
 const Nav = styled.nav`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.4rem;
   padding: 0.5rem 0.5rem;
-  z-index: 9999;
+  height: 5rem;
+  z-index: 9990;
 `;
 
 const Headline = styled.h1`
@@ -31,20 +33,20 @@ const NavMenu = styled.ul`
   align-items: center;
 
   @media only screen and (max-width: 768px) {
-    position: fixed;
-    right: -100%;
-    top: 4rem;
+    position: absolute;
+    display: none;
+
     flex-direction: column;
     background: #fff;
     width: 100%;
-    border-radius: 10px;
     text-align: center;
-    transition: 0.3s;
     box_shadow: 0 10px 27px rgba(0, 0, 0, 0.5);
     justify-content: stretch;
 
     &.active {
-      right: 0;
+      display: block;
+      top: calc(5rem + 1px);
+      box-shadow: 0 10px 5px -2px ${COLORS.titleGreyColor};
     }
   }
 `;
@@ -123,39 +125,39 @@ export const NavBar = () => {
   };
 
   const Profile = (
-    <Link onClick={closeMenu} to="/profile">
+    <Link onClick={closeMenu} to='/profile'>
       Profile
     </Link>
   );
   const Entries = (
-    <Link onClick={closeMenu} to="/entries">
+    <Link onClick={closeMenu} to='/entries'>
       Entries
     </Link>
   );
   const Login = (
-    <Link onClick={closeMenu} to="/login">
+    <Link onClick={closeMenu} to='/login'>
       Login
     </Link>
   );
   const About = (
-    <Link onClick={closeMenu} to="/about">
+    <Link onClick={closeMenu} to='/about'>
       About
     </Link>
   );
   const Contact = (
-    <Link onClick={closeMenu} to="/contact">
+    <Link onClick={closeMenu} to='/contact'>
       Contact
     </Link>
   );
   const Logout = (
-    <Link onClick={onLogout} to="/">
+    <Link onClick={onLogout} to='/'>
       Log out
     </Link>
   );
   return (
     <Header>
       <Nav>
-        <Link to="/">
+        <Link to='/'>
           <Headline>enlightened broccoli</Headline>
         </Link>
         <NavMenu ref={menu}>
