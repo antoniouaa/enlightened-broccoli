@@ -71,7 +71,7 @@ export const Input = styled.input`
   border: none;
 
   &:hover {
-    cursor: pointer;
+    cursor: ${({ cur }) => cur || "text"};
   }
 `;
 
@@ -120,11 +120,11 @@ export const WrapIcon = styled.div`
   padding-bottom: 90px;
   display: flex;
   flex: 1 2;
+  align-items: center;
 
   @media only screen and (max-width: 1024px) {
     flex-direction: column-reverse;
     padding-top: 15px;
-    align-items: center;
     justify-content: space-between;
   }
 `;
@@ -132,6 +132,8 @@ export const WrapIcon = styled.div`
 export const BroccoliImg = styled.img`
   margin-right: 2rem;
   left: 10rem;
+  width: 281px;
+  height: 251px;
 
   @media only screen and (max-width: 1024px) {
     display: block;

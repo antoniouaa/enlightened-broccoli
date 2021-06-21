@@ -93,6 +93,7 @@ export const LogIn = () => {
             </WrapInput>
             <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
               <Input
+                cur='pointer'
                 textColor='#fff'
                 textHeavy='500'
                 type='button'

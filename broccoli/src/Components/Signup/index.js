@@ -150,7 +150,7 @@ export const SignUp = () => {
     <Container>
       <Wrapper>
         <ProgressBar>
-          <Step ref={step1} className="active">
+          <Step ref={step1} className='active'>
             Account
           </Step>
           <Step ref={step2}>Personal</Step>
@@ -159,32 +159,32 @@ export const SignUp = () => {
         <SignUpWrapper formColor={COLORS.defaultWrapInputColor}>
           <Form>
             <Title>Sign up</Title>
-            <FormStep ref={accountDetails} className="active">
+            <FormStep ref={accountDetails} className='active'>
               <FormLabel>Account Details</FormLabel>
               <WrapInput ref={emailInput} bgColor={COLORS.defaultBackground}>
                 <Input
-                  id="email"
+                  id='email'
                   value={userState.email}
-                  placeholder="Email"
+                  placeholder='Email'
                   onChange={onStateChange}
                   required
                 />
               </WrapInput>
               <WrapInput ref={userInput} bgColor={COLORS.defaultBackground}>
                 <Input
-                  id="username"
+                  id='username'
                   value={userState.username}
-                  placeholder="Username"
+                  placeholder='Username'
                   onChange={onStateChange}
                   required
                 />
               </WrapInput>
               <WrapInput ref={passInput} bgColor={COLORS.defaultBackground}>
                 <Input
-                  type="password"
-                  id="password"
+                  type='password'
+                  id='password'
                   value={userState.password}
-                  placeholder="Password"
+                  placeholder='Password'
                   onChange={onStateChange}
                   required
                 />
@@ -193,20 +193,21 @@ export const SignUp = () => {
                 ref={retypePassInput}
                 bgColor={COLORS.defaultBackground}>
                 <Input
-                  type="password"
-                  id="retypePassword"
+                  type='password'
+                  id='retypePassword'
                   value={userState.retypePassword}
-                  placeholder="Confirm Password"
+                  placeholder='Confirm Password'
                   onChange={onStateChange}
                   required
                 />
               </WrapInput>
-              <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
+              <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
                 <Input
-                  textColor="#fff"
-                  textHeavy="500"
-                  type="button"
-                  value="Next"
+                  cur='pointer'
+                  textColor='#fff'
+                  textHeavy='500'
+                  type='button'
+                  value='Next'
                   onClick={onNextClick}
                 />
               </WrapInput>
@@ -215,9 +216,9 @@ export const SignUp = () => {
               <FormLabel>Personal Details</FormLabel>
               <WrapInput ref={heightInput} bgColor={COLORS.defaultBackground}>
                 <Input
-                  id="height"
+                  id='height'
                   value={userState.height}
-                  placeholder="Height (cm)"
+                  placeholder='Height (cm)'
                   onChange={onStateChange}
                   required
                 />
@@ -226,35 +227,35 @@ export const SignUp = () => {
                 <SmallButton
                   ref={ageInput}
                   bgColor={COLORS.defaultBackground}
-                  marginRight="10px">
+                  marginRight='10px'>
                   <Input
-                    id="age"
+                    id='age'
                     value={userState.age}
-                    placeholder="Age"
+                    placeholder='Age'
                     onChange={onStateChange}
                     required
                   />
                 </SmallButton>
                 <SmallButton
                   bgColor={COLORS.defaultBackground}
-                  marginLeft="10px"
+                  marginLeft='10px'
                   ref={sexInput}>
                   <SexSelect
-                    name="sex"
-                    id="sex"
+                    name='sex'
+                    id='sex'
                     onChange={onStateChange}
                     required>
                     <option hidden>Sex</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
                   </SexSelect>
                 </SmallButton>
               </ButtonWrap>
               <WrapInput ref={weightInput} bgColor={COLORS.defaultBackground}>
                 <Input
-                  id="weight"
+                  id='weight'
                   value={userState.weight}
-                  placeholder="Weight (kg)"
+                  placeholder='Weight (kg)'
                   onChange={onStateChange}
                   required
                 />
@@ -264,24 +265,26 @@ export const SignUp = () => {
                 <SmallButton
                   isHoverable
                   bgColor={COLORS.buttonColor}
-                  marginRight="10px">
+                  marginRight='10px'>
                   <Input
-                    textColor="#fff"
-                    textHeavy="500"
-                    type="button"
-                    value="Back"
+                    cur='pointer'
+                    textColor='#fff'
+                    textHeavy='500'
+                    type='button'
+                    value='Back'
                     onClick={onPrevClick}
                   />
                 </SmallButton>
                 <SmallButton
                   isHoverable
                   bgColor={COLORS.buttonColor}
-                  marginLeft="10px">
+                  marginLeft='10px'>
                   <Input
-                    textColor="#fff"
-                    textHeavy="500"
-                    type="button"
-                    value="Next"
+                    cur='pointer'
+                    textColor='#fff'
+                    textHeavy='500'
+                    type='button'
+                    value='Next'
                     onClick={onNextClick}
                   />
                 </SmallButton>
@@ -292,10 +295,10 @@ export const SignUp = () => {
               <WrapRadio>
                 <label>
                   <RadioButton
-                    type="radio"
-                    id="lose"
-                    name="goal"
-                    value="lose"
+                    type='radio'
+                    id='lose'
+                    name='goal'
+                    value='lose'
                     onClick={onStateChange}
                   />
                   Lose weight
@@ -304,10 +307,10 @@ export const SignUp = () => {
               <WrapRadio>
                 <label>
                   <RadioButton
-                    type="radio"
-                    id="maintain"
-                    name="goal"
-                    value="maintain"
+                    type='radio'
+                    id='maintain'
+                    name='goal'
+                    value='maintain'
                     onClick={onStateChange}
                     checked
                   />
@@ -317,10 +320,10 @@ export const SignUp = () => {
               <WrapRadio>
                 <label>
                   <RadioButton
-                    type="radio"
-                    id="gain"
-                    name="goal"
-                    value="gain"
+                    type='radio'
+                    id='gain'
+                    name='goal'
+                    value='gain'
                     onClick={onStateChange}
                   />
                   Gain weight
@@ -330,12 +333,13 @@ export const SignUp = () => {
                 <SmallButton
                   isHoverable
                   bgColor={COLORS.buttonColor}
-                  marginright="10px">
+                  marginright='10px'>
                   <Input
-                    textColor="#fff"
-                    textHeavy="500"
-                    type="button"
-                    value="Back"
+                    cur='pointer'
+                    textColor='#fff'
+                    textHeavy='500'
+                    type='button'
+                    value='Back'
                     onClick={onPrevClick}
                   />
                 </SmallButton>
@@ -343,12 +347,13 @@ export const SignUp = () => {
                   isHoverable
                   isSubmit
                   bgColor={COLORS.greenSubmitButtonColor}
-                  marginLeft="10px">
+                  marginLeft='10px'>
                   <Input
-                    textColor="#fff"
-                    textHeavy="500"
-                    type="button"
-                    value="Sign up"
+                    cur='pointer'
+                    textColor='#fff'
+                    textHeavy='500'
+                    type='button'
+                    value='Sign up'
                     onClick={onSubmitClick}
                   />
                 </SmallButton>

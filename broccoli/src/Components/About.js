@@ -43,6 +43,8 @@ const AboutWrapper = styled(Wrapper)`
 
 const ChickenImg = styled(BroccoliImg)`
   margin: 2rem;
+  height: 320px;
+  width: 210px;
 `;
 
 export const About = () => {
