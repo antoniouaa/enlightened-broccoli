@@ -38,13 +38,13 @@ const NavMenu = styled.ul`
 
     flex-direction: column;
     background: #fff;
-    width: 100%;
+    width: 95%;
+    height: 200px;
     text-align: center;
     box_shadow: 0 10px 27px rgba(0, 0, 0, 0.5);
-    justify-content: stretch;
 
     &.active {
-      display: block;
+      display: flex;
       top: calc(5rem + 1px);
       box-shadow: 0 10px 5px -2px ${COLORS.titleGreyColor};
     }
@@ -52,7 +52,7 @@ const NavMenu = styled.ul`
 `;
 
 const NavItem = styled.li`
-  margin-left: 2.5rem;
+  margin-left: 2rem;
   margin-right: 2rem;
   font-weight: 400;
 
@@ -65,7 +65,7 @@ const NavItem = styled.li`
   }
 
   @media only screen and (max-width: 768px) {
-    margin: 2.5rem 0;
+    margin: 1rem 0;
     &:hover {
       background-color: #fff;
     }

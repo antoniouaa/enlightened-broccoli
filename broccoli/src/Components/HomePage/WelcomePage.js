@@ -44,6 +44,7 @@ export const Welcome = () => {
         <WrapSignUp>
           <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
             <Input
+              cur='pointer'
               type='button'
               value='Sign up - for free'
               textColor='#fff'

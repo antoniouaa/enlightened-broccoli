@@ -12,16 +12,25 @@ const FooterWrapper = styled.footer`
   position: fixed;
   left: 0px;
   right: 0px;
-  height: 3rem;
   bottom: 0px;
+  height: 50px;
+  margin-top: 20px;
+  margin: 0 auto;
 
   color: ${COLORS.titleColor};
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (min-height: 101vh) {
     position: relative;
-    margin: 0;
-    padding: 0;
+    bottom: 0px;
+    display: block;
   }
+
+  // @media only screen and (max-width: 768px) {
+  //   position: relative;
+  //   margin: 0;
+  //   padding: 0;
+  //   align-self: flex-end;
+  // }
 `;
 
 export const Footer = () => {
