@@ -42,12 +42,12 @@ export const Welcome = () => {
         <Headline>and macronutrient </Headline>
         <Headline isBlue={COLORS.buttonColor}>tracking for dummies</Headline>
         <WrapSignUp>
-          <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
+          <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
             <Input
-              cur='pointer'
-              type='button'
-              value='Sign up - for free'
-              textColor='#fff'
+              cur="pointer"
+              type="button"
+              value="Sign up - for free"
+              textColor="#fff"
               onClick={() => history.push("/signup")}
             />
           </WrapInput>

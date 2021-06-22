@@ -113,8 +113,8 @@ export const EntryCreate = () => {
           <Title>Create a new entry</Title>
           <SearchBar bgColor={COLORS.defaultBackground}>
             <ItemSearch
-              id='item'
-              placeholder='Search items'
+              id="item"
+              placeholder="Search items"
               onChange={onUserInput}
             />
             <button onClick={onFormSubmit}>Submit</button>

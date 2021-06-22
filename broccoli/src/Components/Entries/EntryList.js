@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getToken } from "../../Actions/userSlice";
 import { getEntries, getUserEntries } from "../../Actions/entriesSlice";
-import { Container, Wrapper } from "../StyledComponents";
+import { Wrapper } from "../StyledComponents";
 import { EntryLink } from "./EntryLink";
 
 export const EntryList = () => {
@@ -22,9 +22,5 @@ export const EntryList = () => {
     .slice()
     .reverse()
     .map((entry) => <EntryLink {...entry} />);
-  return (
-    <Container>
-      <Wrapper>{entryItems}</Wrapper>
-    </Container>
-  );
+  return <Wrapper>{entryItems}</Wrapper>;
 };

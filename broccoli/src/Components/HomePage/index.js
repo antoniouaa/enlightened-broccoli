@@ -21,7 +21,8 @@ export const AuthedHome = (user) => {
           }
           const { id } = res.payload;
           history.push(`/entries/${id}/edit`);
-        }}>
+        }}
+      >
         Add an entry?
       </StyledLink>
     </Wrapper>
@@ -34,7 +35,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <Wrapper spacing='space-between'>
+      <Wrapper spacing="space-between">
         {loggedIn ? <AuthedHome {...user} /> : <Welcome />}
       </Wrapper>
     </Container>

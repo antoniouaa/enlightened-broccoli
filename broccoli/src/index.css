@@ -1,25 +1,25 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: large;
-    font-family: "Ubuntu", sans-serif
+  font-size: large;
+  font-family: "Ubuntu", sans-serif;
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .App {
-    min-height: calc(100vh - 50px);
-    display: flex;
-    flex-direction: column;
-    /* flex: 1 2 1; */
+  min-height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  /* flex: 1 2 1; */
 }
