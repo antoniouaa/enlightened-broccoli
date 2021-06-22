@@ -63,8 +63,11 @@ const MessageBox = styled.textarea`
 `;
 
 const AboutImg = styled(BroccoliImg)`
-  left: 10%;
-  top: 10%;
+  position: relative;
+  height: 300px;
+  width: 300px;
+  left: 100px;
+  bottom: -100px;
 
   @media only screen and (max-width: 768px) {
     display: none;
