@@ -12,7 +12,7 @@ export const dateStringSlashes = (dateString) =>
 
 export const oneDayTime = 24 * 60 * 60 * 1000;
 
-export const weekLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+export const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const monthLabels = [
   "Jan",
   "Feb",

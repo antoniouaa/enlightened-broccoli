@@ -45,8 +45,3 @@ function App() {
 }
 
 export default App;
-
-//https://reactrouter.com/web/example/animated-transitions
-// Add CSS transitions between routes
-
-// Complete the EntryBox styles

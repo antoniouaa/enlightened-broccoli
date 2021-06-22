@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import HeatMap from "@uiw/react-heat-map";
 
 import { getEntries } from "../../Actions/entriesSlice";
 import { Wrapper, Title, COLORS } from "../StyledComponents";
 import { dateStringSlashes } from "../../utils";
+import Heatmap from "./Heatmap.js";
 
 const panelColors = {
   0: COLORS.defaultBackground,
@@ -19,17 +19,11 @@ export default function Calendar(props) {
   const values = entries.map((entry) => {
     return { ...entry, created_at: dateStringSlashes(entry.created_at) };
   });
-  console.log(values);
 
   return (
     <Wrapper>
       <Title>Your Entries</Title>
-      <HeatMap
-        width={600}
-        style={{ color: "#ad001d" }}
-        startDate={new Date("2021/06/01")}
-        panelColors={panelColors}
-      />
+      <Heatmap values={values} cellSize={15} space={20} y={10} />
     </Wrapper>
   );
 }
