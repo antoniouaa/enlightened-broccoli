@@ -1,6 +1,4 @@
 **/node_modules
-**/poetry.lock
-**/package-lock.json
 
 # Cached artefacts
 **/.pytest_cache
@@ -12,3 +10,6 @@
 # coverage
 **/.coverage
 **/htmlcov
+
+# db stuff
+postgres-data

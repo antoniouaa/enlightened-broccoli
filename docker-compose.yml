@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  broccoli:
+    build:
+      context: ./broccoli/
+    container_name: react
+    expose:
+      - 3000
+    ports:
+      - "127.0.0.1:3000:3000"
+    stdin_open: true
+
+  fastapi:
+    build:
+      context: ./backend/
+    container_name: fastapi
+    depends_on:
+      - db
+    expose:
+      - 5000
+    ports:
+      - "127.0.0.1:5000:5000"
+
+  db:
+    image: postgres:13-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-data:
