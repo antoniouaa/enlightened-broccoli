@@ -14,6 +14,7 @@ import {
   COLORS,
 } from "../StyledComponents";
 import { Statistic } from "./Statistic";
+import { energyExpenditures, titleCase } from "../../utils";
 
 const ProfileContainer = styled(Container)`
   margin-top: 2.5rem;
@@ -54,43 +55,29 @@ export const Profile = () => {
     Height: height,
     Weight: weight,
     Age: age,
-    Sex: sex,
+    Sex: titleCase(sex),
+    Goal: titleCase(goal),
   };
 
-  const maleBMR = 66.47 + 13.75 * +weight + 5.003 * +height - 6.755 * +age;
-  const femaleBMR = 655.1 + 9.563 * +weight + 1.85 * +height - 4.676 * +age;
-  const BMR = Math.round(sex === "male" ? maleBMR : femaleBMR);
-  const multipliers = {
-    sed: 1.2,
-    light: 1.375,
-    moderate: 1.55,
-    very: 1.75,
-    extreme: 1.95,
-  };
-  const extraCalories = {
-    lose: 0.8,
-    maintain: 1,
-    gain: 1.2,
-  };
-  const sedentaryCalories = Math.round(BMR * multipliers.sed);
-  const target = Math.round(sedentaryCalories * extraCalories[goal]);
+  const { basal, sedentary, target } = energyExpenditures(user);
+  console.log(basal, sedentary, target);
 
   const about = Object.entries(userStats).map(([name, stat]) => {
     const unit = name === "Height" ? "cm" : name === "Weight" ? "kg" : "";
     return <Statistic key={name} name={name} stat={stat} unit={unit} />;
   });
-  const caloric = (
-    <Statistic name="Basal Metabolic Rate" stat={BMR} unit="kcal" />
+  const basalBox = (
+    <Statistic name='Basal Metabolic Rate' stat={basal} unit='kcal' />
   );
-  const sedentary = (
-    <Statistic name="Sedentary" stat={sedentaryCalories} unit="kcal" />
+  const sedentaryBox = (
+    <Statistic name='Sedentary' stat={sedentary} unit='kcal' />
   );
-  const targetCalories = <Statistic name="Target" stat={target} unit="kcal" />;
+  const targetBox = <Statistic name='Target' stat={target} unit='kcal' />;
 
   return (
     <ProfileContainer>
-      <Wrapper direction="row" spacing="center">
-        <Wrapper direction="column">
+      <Wrapper direction='row' spacing='center'>
+        <Wrapper direction='column'>
           <ProfileIcon src={sex === "male" ? carrot : onion} />
           <p>@{username}</p>
         </Wrapper>
@@ -100,9 +87,9 @@ export const Profile = () => {
         </Wrapper>
         <Wrapper>
           <ProfileSubTitle>Caloric Needs</ProfileSubTitle>
-          {caloric}
-          {sedentary}
-          {targetCalories}
+          {basalBox}
+          {sedentaryBox}
+          {targetBox}
         </Wrapper>
       </Wrapper>
     </ProfileContainer>

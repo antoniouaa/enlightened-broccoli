@@ -6,9 +6,9 @@ import { IoFastFood } from "react-icons/io5";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 
-import { dateFormat, dayNameFromDate } from "../../utils";
+import { dateFormat, dayNameFromDate, energyExpenditures } from "../../utils";
 import { COLORS } from "../StyledComponents";
-import { getToken } from "../../Actions/userSlice";
+import { getToken, getUser } from "../../Actions/userSlice";
 import { getEntryItems } from "../../Actions/entriesSlice";
 
 const EntryLink = styled(Link)`
@@ -20,6 +20,7 @@ const EntryLink = styled(Link)`
 export const Element = ({ id, created_at, ...rest }) => {
   const dispatch = useDispatch();
   const token = useSelector(getToken);
+  const userStats = useSelector(getUser);
   const [entryItems, setEntryItems] = useState([]);
 
   useEffect(async () => {
@@ -30,6 +31,14 @@ export const Element = ({ id, created_at, ...rest }) => {
 
   const namedMonth = dateFormat(created_at);
   const dayMonth = dayNameFromDate(created_at);
+  console.log(entryItems);
+  console.log(rest);
+  const totalCalories =
+    entryItems.length > 0
+      ? entryItems
+          .map((item) => item.calories)
+          .reduce((acc, item) => acc + item)
+      : 0;
   return (
     <VerticalTimelineElement
       className='vertical-timeline-element--work'
@@ -44,8 +53,10 @@ export const Element = ({ id, created_at, ...rest }) => {
       iconStyle={{ background: COLORS.styledLinkColor, color: "#fff" }}>
       <EntryLink to={`timeline/${id}/edit`}>
         <h3 className='vertical-timeline-element-title'>{dayMonth}</h3>
-        <h4 className='vertical-timeline-element-subtitle'>Entry</h4>
         <p>{entryItems.length} items logged</p>
+        <h4>
+          {totalCalories} kcal out of {energyExpenditures(userStats).target}
+        </h4>
       </EntryLink>
     </VerticalTimelineElement>
   );
