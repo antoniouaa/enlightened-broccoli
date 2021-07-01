@@ -76,5 +76,5 @@ export const energyExpenditures = (userStats) => {
 export const titleCase = (string) =>
   string
     .split("")
-    .map((letter, index) => (index == 0 ? letter.toUpperCase() : letter))
+    .map((letter, index) => (index === 0 ? letter.toUpperCase() : letter))
     .join("");

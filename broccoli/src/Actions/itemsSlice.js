@@ -14,6 +14,22 @@ export const getItems = createAsyncThunk("getItems", async () => {
   throw new Error(data.detail);
 });
 
+export const addItem = createAsyncThunk("addItem", async ({ token, item }) => {
+  const response = await fetch(`/items/`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(item),
+  });
+  const data = await response.json();
+  if (response.status === 201) {
+    return data;
+  }
+  throw new Error(data.detail);
+});
+
 const itemsSlice = createSlice({
   name: "items",
   initialState: {
@@ -32,6 +48,18 @@ const itemsSlice = createSlice({
       state.error = "";
     },
     [getItems.rejected]: (state, action) => {
+      state.error = action.error;
+      state.status = "failed";
+    },
+    [addItem.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [addItem.fulfilled]: (state, action) => {
+      state.items.push(action.payload);
+      state.error = "";
+      state.status = "succeded";
+    },
+    [addItem.rejected]: (state, action) => {
       state.error = action.error;
       state.status = "failed";
     },

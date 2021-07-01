@@ -9,7 +9,7 @@ import LogIn from "./Components/LogIn";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
 import SignUp from "./Components/Signup";
-import { Timeline, EntryCreate } from "./Components/Entries";
+import { Timeline, EntryCreate, CreateItem } from "./Components/Entries";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
@@ -31,6 +31,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute exact path='/timeline/:id/edit'>
             <EntryCreate />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/item/create'>
+            <CreateItem />
           </ProtectedRoute>
           <Route exact path='/' component={Home} />
         </Switch>

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { fetchItems } from "../../Actions/itemsSlice";
 import { addItemToEntry, getEntryItems } from "../../Actions/entriesSlice";
-
 import {
   Title,
   Form,
@@ -14,6 +13,7 @@ import {
   Input,
   COLORS,
   Container,
+  StyledLink,
 } from "../StyledComponents";
 import { EntryListItem } from "./EntryDetails";
 import { getToken } from "../../Actions/userSlice";
@@ -80,12 +80,33 @@ const SearchBar = styled(WrapInput)`
 `;
 
 const FilterList = styled.ul`
+  width: 100%;
   @media only screen and (max-width: 768px) {
     display: none;
   }
 `;
 
+const EntryForm = styled(Form)`
+  justify-content: center;
+`;
+
+const ItemCreateLink = styled(StyledLink)`
+  color: ${COLORS.buttonColorHover};
+`;
+
+const ItemCreate = ({ history }) => {
+  return (
+    <span>
+      There are no items that match that description. Do you want to{" "}
+      <ItemCreateLink onClick={() => history.push("/item/create")}>
+        create one?
+      </ItemCreateLink>
+    </span>
+  );
+};
+
 export const EntryCreate = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -135,7 +156,7 @@ export const EntryCreate = () => {
         ))}
       </AddedItems>
       <EntryFormWrapper>
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <EntryForm onSubmit={(e) => e.preventDefault()}>
           <Title>Create a new entry</Title>
           <SearchBar bgColor={COLORS.defaultBackground}>
             <ItemSearch
@@ -145,12 +166,16 @@ export const EntryCreate = () => {
             />
             <button onClick={onFormSubmit}>Submit</button>
           </SearchBar>
-          <FilterList>
-            {filtered.map((item, key) => (
-              <EntryListItem key={key} addItem={appendItem} {...item} />
-            ))}
-          </FilterList>
-        </Form>
+          {filtered.length > 0 ? (
+            <FilterList>
+              {filtered.map((item, key) => (
+                <EntryListItem key={key} addItem={appendItem} {...item} />
+              ))}
+            </FilterList>
+          ) : (
+            <ItemCreate history={history} />
+          )}
+        </EntryForm>
       </EntryFormWrapper>
     </CreateWrapper>
   );
