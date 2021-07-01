@@ -125,39 +125,39 @@ export const NavBar = () => {
   };
 
   const Profile = (
-    <Link onClick={closeMenu} to="/profile">
+    <Link onClick={closeMenu} to='/profile'>
       Profile
     </Link>
   );
   const Entries = (
-    <Link onClick={closeMenu} to="/entries">
-      Entries
+    <Link onClick={closeMenu} to='/timeline'>
+      Timeline
     </Link>
   );
   const Login = (
-    <Link onClick={closeMenu} to="/login">
+    <Link onClick={closeMenu} to='/login'>
       Login
     </Link>
   );
   const About = (
-    <Link onClick={closeMenu} to="/about">
+    <Link onClick={closeMenu} to='/about'>
       About
     </Link>
   );
   const Contact = (
-    <Link onClick={closeMenu} to="/contact">
+    <Link onClick={closeMenu} to='/contact'>
       Contact
     </Link>
   );
   const Logout = (
-    <Link onClick={onLogout} to="/">
+    <Link onClick={onLogout} to='/'>
       Log out
     </Link>
   );
   return (
     <Header>
       <Nav>
-        <Link to="/">
+        <Link to='/'>
           <Headline>enlightened broccoli</Headline>
         </Link>
         <NavMenu ref={menu}>

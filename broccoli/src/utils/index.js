@@ -10,9 +10,22 @@ export const dateStringSlashes = (dateString) =>
     year: "numeric",
   }).format(Date.parse(dateString));
 
+export const dayNameFromDate = (dateString) => {
+  const date = new Date(dateString);
+  return weekLabels[date.getDay()];
+};
+
 export const oneDayTime = 24 * 60 * 60 * 1000;
 
-export const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+export const weekLabels = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 export const monthLabels = [
   "Jan",
   "Feb",

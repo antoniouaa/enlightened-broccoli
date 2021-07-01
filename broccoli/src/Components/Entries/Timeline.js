@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { VerticalTimeline } from "react-vertical-timeline-component";
 
 import { getToken } from "../../Actions/userSlice";
 import { getEntries, getUserEntries } from "../../Actions/entriesSlice";
 import { Wrapper } from "../StyledComponents";
-import { EntryLink } from "./EntryLink";
+import { Element } from "./TimelineElement";
 
-export const EntryList = () => {
+export const Timeline = () => {
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const ent = useSelector(getEntries);
@@ -18,9 +19,13 @@ export const EntryList = () => {
     }
   }, []);
 
-  const entryItems = ent
+  const elements = ent
     .slice()
     .reverse()
-    .map((entry) => <EntryLink {...entry} />);
-  return <Wrapper>{entryItems}</Wrapper>;
+    .map((entry) => <Element {...entry} />);
+  return (
+    <Wrapper>
+      <VerticalTimeline>{elements}</VerticalTimeline>
+    </Wrapper>
+  );
 };

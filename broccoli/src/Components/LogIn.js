@@ -67,7 +67,7 @@ export const LogIn = () => {
       return;
     }
     await dispatch(getItems());
-    history.push("/calendar");
+    history.push("/timeline");
   };
 
   useEffect(async () => {
@@ -82,30 +82,30 @@ export const LogIn = () => {
             <Title>Log in</Title>
             <WrapInput ref={userInput} bgColor={COLORS.defaultBackground}>
               <Input
-                id="username"
+                id='username'
                 value={username}
-                placeholder="Username"
+                placeholder='Username'
                 onChange={onUsernameChange}
                 required
               />
             </WrapInput>
             <WrapInput ref={passInput} bgColor={COLORS.defaultBackground}>
               <Input
-                type="password"
-                id="password"
+                type='password'
+                id='password'
                 value={password}
                 onChange={onPasswordChange}
-                placeholder="Password"
+                placeholder='Password'
                 required
               />
             </WrapInput>
-            <WrapInput isHoverable bgColor={COLORS.buttonColor} mt="20px">
+            <WrapInput isHoverable bgColor={COLORS.buttonColor} mt='20px'>
               <Input
-                cur="pointer"
-                textColor="#fff"
-                textHeavy="500"
-                type="button"
-                value="LOG IN"
+                cur='pointer'
+                textColor='#fff'
+                textHeavy='500'
+                type='button'
+                value='LOG IN'
                 onClick={onLoginClick}
               />
             </WrapInput>

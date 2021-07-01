@@ -30,8 +30,7 @@ export const EntryListItem = ({
   return (
     <EntryItemContainer>
       <span>
-        {title}
-        {calories} kcal
+        {title} {calories} kcal
       </span>
       <p>{description}</p>
       {addItem && (

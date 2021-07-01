@@ -15,25 +15,38 @@ import {
   COLORS,
   Container,
 } from "../StyledComponents";
-import { EntryListItem } from "./EntryListItem";
+import { EntryListItem } from "./EntryDetails";
 import { getToken } from "../../Actions/userSlice";
 
 const CreateWrapper = styled(Container)`
   display: flex;
   flex-direction: row;
   flex: 1 2;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-end;
+  }
 `;
 
 const EntryFormWrapper = styled(LoginWrapper)`
   background-color: ${COLORS.defaultWrapInputColor};
   position: fixed;
   left: 38%;
+  @media only screen and (max-width: 768px) {
+    left: 0%;
+    position: relative;
+  }
 `;
 
 const AddedItems = styled(EntryFormWrapper)`
   background-color: white;
   left: 15%;
   order: -1;
+
+  @media only screen and (max-width: 768px) {
+    left: 0%;
+  }
 `;
 
 const ItemSearch = styled(Input)`
@@ -63,6 +76,12 @@ const SearchBar = styled(WrapInput)`
       cursor: pointer;
       background-color: ${COLORS.greenSubmitButtonColorHover};
     }
+  }
+`;
+
+const FilterList = styled.ul`
+  @media only screen and (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -100,10 +119,17 @@ export const EntryCreate = () => {
     }
   };
 
+  const totalCalories =
+    addedItems.length > 0
+      ? addedItems
+          .map((item) => item.calories)
+          .reduce((acc, next) => acc + next)
+      : 0;
+
   return (
     <CreateWrapper>
       <AddedItems>
-        {addedItems.length > 0 && "Today's Items"}
+        {addedItems.length > 0 && `Today's Items (${totalCalories}kcal)`}
         {addedItems.map((i, key) => (
           <EntryListItem key={key} {...i} />
         ))}
@@ -113,17 +139,17 @@ export const EntryCreate = () => {
           <Title>Create a new entry</Title>
           <SearchBar bgColor={COLORS.defaultBackground}>
             <ItemSearch
-              id="item"
-              placeholder="Search items"
+              id='item'
+              placeholder='Search items'
               onChange={onUserInput}
             />
             <button onClick={onFormSubmit}>Submit</button>
           </SearchBar>
-          <ul>
+          <FilterList>
             {filtered.map((item, key) => (
               <EntryListItem key={key} addItem={appendItem} {...item} />
             ))}
-          </ul>
+          </FilterList>
         </Form>
       </EntryFormWrapper>
     </CreateWrapper>

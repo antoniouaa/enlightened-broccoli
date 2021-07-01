@@ -9,36 +9,32 @@ import LogIn from "./Components/LogIn";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
 import SignUp from "./Components/Signup";
-import { EntryList, EntryCreate } from "./Components/Entries";
+import { Timeline, EntryCreate } from "./Components/Entries";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Calendar from "./Components/Calendar";
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <BrowserRouter>
         <NavBar />
         <Switch>
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/login" component={LogIn} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/contact" component={Contact} />
-          <Route exact path="/signup" component={SignUp} />
-          <ProtectedRoute exact path="/calendar">
-            <Calendar />
-          </ProtectedRoute>
-          <ProtectedRoute exact path="/profile">
+          <Route exact path='/home' component={Home} />
+          <Route exact path='/login' component={LogIn} />
+          <Route exact path='/about' component={About} />
+          <Route exact path='/contact' component={Contact} />
+          <Route exact path='/signup' component={SignUp} />
+          <ProtectedRoute exact path='/profile'>
             <Profile />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/entries">
-            <EntryList />
+          <ProtectedRoute exact path='/timeline'>
+            <Timeline />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/entries/:id/edit">
+          <ProtectedRoute exact path='/timeline/:id/edit'>
             <EntryCreate />
           </ProtectedRoute>
-          <Route exact path="/" component={Home} />
+          <Route exact path='/' component={Home} />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
