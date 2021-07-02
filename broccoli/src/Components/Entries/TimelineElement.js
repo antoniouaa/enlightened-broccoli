@@ -31,8 +31,6 @@ export const Element = ({ id, created_at, ...rest }) => {
 
   const namedMonth = dateFormat(created_at);
   const dayMonth = dayNameFromDate(created_at);
-  console.log(entryItems);
-  console.log(rest);
   const totalCalories =
     entryItems.length > 0
       ? entryItems

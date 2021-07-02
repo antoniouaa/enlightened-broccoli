@@ -22,7 +22,7 @@ export const Timeline = () => {
   const elements = ent
     .slice()
     .reverse()
-    .map((entry) => <Element {...entry} />);
+    .map((entry) => <Element key={entry.id} {...entry} />);
   return (
     <Wrapper>
       <VerticalTimeline>{elements}</VerticalTimeline>

@@ -10,7 +10,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        loggedIn ? children : <Redirect to="/login" from={location} />
+        loggedIn ? children : <Redirect to='/login' from={location.pathname} />
       }
     />
   );

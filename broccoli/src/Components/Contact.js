@@ -57,7 +57,6 @@ const MessageBox = styled.textarea`
   color: ${COLORS.titleColor};
 
   &:hover {
-    height: 200px;
     cursor: text;
   }
 `;
@@ -102,10 +101,10 @@ export const Contact = () => {
           <AboutText>Have a question?</AboutText>
           <AboutText isBlue={COLORS.buttonColor}>Drop us a message!</AboutText>
           <EnquiryForm>
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor='fullName'>Full Name</label>
             <EnquiryInput>
               <Input
-                id="fullName"
+                id='fullName'
                 placeholder="What's your name"
                 value={formDetails.fullName}
                 required
@@ -114,11 +113,11 @@ export const Contact = () => {
                 }
               />
             </EnquiryInput>
-            <label htmlFor="email">Email address</label>
+            <label htmlFor='email'>Email address</label>
             <EnquiryInput>
               <Input
-                id="email"
-                placeholder="your_email@example.com"
+                id='email'
+                placeholder='your_email@example.com'
                 value={formDetails.email}
                 required
                 onChange={(e) =>
@@ -126,11 +125,11 @@ export const Contact = () => {
                 }
               />
             </EnquiryInput>
-            <label htmlFor="message">Message</label>
+            <label htmlFor='message'>Message</label>
             <EnquiryInput>
               <MessageBox
-                id="message"
-                placeholder="What issues have you experienced?"
+                id='message'
+                placeholder='What issues have you experienced?'
                 value={formDetails.message}
                 required
                 onChange={(e) =>
@@ -140,11 +139,11 @@ export const Contact = () => {
             </EnquiryInput>
             <EnquiryInput isHoverable bgColor={COLORS.buttonColor}>
               <Input
-                cur="pointer"
-                type="button"
-                textColor="#fff"
-                textHeavy="500"
-                value="Submit"
+                cur='pointer'
+                type='button'
+                textColor='#fff'
+                textHeavy='500'
+                value='Submit'
                 onClick={onFormSubmit}
               />
             </EnquiryInput>

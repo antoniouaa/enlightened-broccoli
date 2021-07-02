@@ -72,6 +72,28 @@ export const addItemToEntry = createAsyncThunk(
   }
 );
 
+export const removeItemFromEntry = createAsyncThunk(
+  "removeItemFromEntry",
+  async ({ item_id, id, token }) => {
+    const response = await fetch(`/entries/`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        item_id,
+        entry_id: id,
+      }),
+    });
+    const data = await response.json();
+    if (response.status === 204) {
+      return item_id;
+    }
+    throw new Error(data.detail);
+  }
+);
+
 const entriesSlice = createSlice({
   name: "entries",
   initialState: {
@@ -124,6 +146,17 @@ const entriesSlice = createSlice({
       state.error = "";
     },
     [addItemToEntry.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error;
+    },
+    [removeItemFromEntry.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [removeItemFromEntry.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.error = "failed";
+    },
+    [removeItemFromEntry.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error;
     },

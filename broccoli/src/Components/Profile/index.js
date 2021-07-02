@@ -60,7 +60,6 @@ export const Profile = () => {
   };
 
   const { basal, sedentary, target } = energyExpenditures(user);
-  console.log(basal, sedentary, target);
 
   const about = Object.entries(userStats).map(([name, stat]) => {
     const unit = name === "Height" ? "cm" : name === "Weight" ? "kg" : "";

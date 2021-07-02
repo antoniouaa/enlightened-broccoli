@@ -1,12 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiMinus } from "react-icons/fi";
 import styled from "styled-components";
 
-import { addItemToEntry } from "../../Actions/entriesSlice";
-import { Container, COLORS } from "../StyledComponents";
+import {
+  addItemToEntry,
+  removeItemFromEntry,
+} from "../../Actions/entriesSlice";
+import { Wrapper, COLORS } from "../StyledComponents";
 
-const EntryItemContainer = styled(Container)`
+const EntryItemContainer = styled(Wrapper)`
   margin: 0.5rem 0 0.5rem 0;
   padding: 0.5rem;
   background-color: ${COLORS.defaultWrapInputColor};
@@ -27,8 +30,12 @@ export const EntryListItem = ({
     dispatch(addItemToEntry(id));
   };
 
+  const onRemoveClick = (id) => {
+    //
+  };
+
   return (
-    <EntryItemContainer>
+    <EntryItemContainer spacing='left'>
       <span>
         {title} {calories} kcal
       </span>
@@ -38,6 +45,9 @@ export const EntryListItem = ({
           <FiPlus />
         </button>
       )}
+      <button onClick={(e) => onRemoveClick(id)}>
+        <FiMinus />
+      </button>
     </EntryItemContainer>
   );
 };

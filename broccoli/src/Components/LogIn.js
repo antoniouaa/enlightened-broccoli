@@ -1,12 +1,9 @@
-import React, { useRef } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { getUserEntries } from "../Actions/entriesSlice";
 import { getItems } from "../Actions/itemsSlice";
-import { loginUser, getToken } from "../Actions/userSlice";
+import { loginUser } from "../Actions/userSlice";
 import {
   Container,
   Wrapper,
@@ -23,8 +20,6 @@ import {
 export const LogIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const token = useSelector(getToken);
 
   const userInput = useRef(null);
   const passInput = useRef(null);
@@ -69,10 +64,6 @@ export const LogIn = () => {
     await dispatch(getItems());
     history.push("/timeline");
   };
-
-  useEffect(async () => {
-    await dispatch(getUserEntries(token));
-  }, [token]);
 
   return (
     <Container>

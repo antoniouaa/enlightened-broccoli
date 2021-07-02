@@ -40,9 +40,10 @@ const EntryFormWrapper = styled(LoginWrapper)`
 `;
 
 const AddedItems = styled(EntryFormWrapper)`
+  width: 18rem;
+  padding: 0;
   background-color: white;
   left: 15%;
-  order: -1;
 
   @media only screen and (max-width: 768px) {
     left: 0%;
@@ -94,14 +95,23 @@ const ItemCreateLink = styled(StyledLink)`
   color: ${COLORS.buttonColorHover};
 `;
 
+const CreateDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const ItemCreate = ({ history }) => {
   return (
-    <span>
-      There are no items that match that description. Do you want to{" "}
-      <ItemCreateLink onClick={() => history.push("/item/create")}>
-        create one?
-      </ItemCreateLink>
-    </span>
+    <CreateDiv>
+      <span>Filter items</span>
+      <span>
+        <ItemCreateLink onClick={() => history.push("/item/create")}>
+          Create new item
+        </ItemCreateLink>
+        .
+      </span>
+    </CreateDiv>
   );
 };
 
@@ -117,11 +127,13 @@ export const EntryCreate = () => {
 
   const appendItem = (item) => setAddedItems([...addedItems, item]);
 
-  useEffect(async () => {
-    setFiltered(allItems);
-    const res = await dispatch(getEntryItems({ token, id }));
-    if (res.error) return;
-    setAddedItems(res.payload || []);
+  useEffect(() => {
+    async function addAndFilterItems() {
+      const res = await dispatch(getEntryItems({ token, id }));
+      if (res.error) return;
+      setAddedItems(res.payload || []);
+    }
+    addAndFilterItems();
   }, []);
 
   const onUserInput = (e) => {
@@ -166,15 +178,12 @@ export const EntryCreate = () => {
             />
             <button onClick={onFormSubmit}>Submit</button>
           </SearchBar>
-          {filtered.length > 0 ? (
-            <FilterList>
-              {filtered.map((item, key) => (
-                <EntryListItem key={key} addItem={appendItem} {...item} />
-              ))}
-            </FilterList>
-          ) : (
-            <ItemCreate history={history} />
-          )}
+          <ItemCreate history={history} />
+          <FilterList>
+            {filtered.map((item, key) => (
+              <EntryListItem key={key} addItem={appendItem} {...item} />
+            ))}
+          </FilterList>
         </EntryForm>
       </EntryFormWrapper>
     </CreateWrapper>
