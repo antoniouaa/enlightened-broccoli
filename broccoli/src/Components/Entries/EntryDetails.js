@@ -25,29 +25,31 @@ export const EntryListItem = ({
 }) => {
   const dispatch = useDispatch();
 
-  const onAddClick = (id) => {
+  const onAddClick = async (id) => {
     addItem({ title, description, calories, id });
-    dispatch(addItemToEntry(id));
+    await dispatch(addItemToEntry(id));
   };
 
-  const onRemoveClick = (id) => {
-    //
+  const onRemoveClick = async (id) => {
+    await dispatch(removeItemFromEntry(id));
   };
 
   return (
-    <EntryItemContainer spacing='left'>
+    <EntryItemContainer>
       <span>
         {title} {calories} kcal
       </span>
       <p>{description}</p>
-      {addItem && (
+      {!!addItem && (
         <button onClick={(e) => onAddClick(id)}>
           <FiPlus />
         </button>
       )}
-      <button onClick={(e) => onRemoveClick(id)}>
-        <FiMinus />
-      </button>
+      {!addItem && (
+        <button onClick={(e) => onRemoveClick(id)}>
+          <FiMinus />
+        </button>
+      )}
     </EntryItemContainer>
   );
 };

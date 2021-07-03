@@ -39,23 +39,6 @@ export const logoutUser = createAsyncThunk("logoutUser", async () => {
   return { isLoggedIn: false };
 });
 
-// Structure of a logged in store
-// const testState = {
-//   user: {
-//     username: "antoniouaa",
-//     email: "antoniouaa@hotmail.com",
-//     weight: "68.4",
-//     height: "175",
-//     age: "25",
-//     sex: "Male",
-//     goals: 0,
-//     token: token_here,
-//     isLoggedIn: true,
-//   },
-//   status: "succeeded",
-//   error: "",
-// };
-
 const userSlice = createSlice({
   name: "user",
   initialState: {

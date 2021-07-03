@@ -84,6 +84,7 @@ def override_get_db():
     test_db = TestSessionLocal()
     try:
         user = override_get_current_user()
+        print(user.id)
         test_db.add(user)
         test_db.commit()
         test_db.refresh(user)
@@ -105,8 +106,8 @@ Base.metadata.create_all(bind=test_engine)
 @pytest.fixture(scope="function")
 def test_client_authed():
     app.dependency_overrides = {
-        get_current_user: override_get_current_user,
         get_db: override_get_db,
+        get_current_user: override_get_current_user,
     }
     Base.metadata.create_all(bind=test_engine)
     with TestClient(app) as test_client:

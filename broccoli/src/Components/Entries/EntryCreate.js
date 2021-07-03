@@ -176,7 +176,7 @@ export const EntryCreate = () => {
               placeholder='Search items'
               onChange={onUserInput}
             />
-            <button onClick={onFormSubmit}>Submit</button>
+            <button onClick={onFormSubmit}>Add to Entry</button>
           </SearchBar>
           <ItemCreate history={history} />
           <FilterList>
