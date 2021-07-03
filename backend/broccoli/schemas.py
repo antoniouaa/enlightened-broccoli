@@ -39,6 +39,7 @@ class Entry(EntryBase):
     id: int
     created_at: datetime.datetime
     user_id: int
+    items: List[Item]
 
     class Config:
         orm_mode = True

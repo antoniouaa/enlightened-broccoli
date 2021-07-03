@@ -52,13 +52,14 @@ def delete_item(db: Session, item_id: int):
 
 
 def get_entries(db: Session, user: schemas.User, skip: int = 0, limit: int = 100):
-    return (
+    entries = (
         db.query(models.Entry)
         .filter(models.Entry.user_id == user.id)
         .offset(skip)
         .limit(limit)
         .all()
     )
+    return entries
 
 
 def create_entry(db: Session, user: schemas.User):
