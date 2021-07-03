@@ -19,7 +19,7 @@ async def get_entries(
     user: schemas.User = Depends(get_current_user),
 ):
     if user:
-        return operations.get_entries(db, skip=skip, limit=limit)
+        return operations.get_entries(db, user=user, skip=skip, limit=limit)
     raise HTTPException(status_code=401, detail="You are not logged in")
 
 
