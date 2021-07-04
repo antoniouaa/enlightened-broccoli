@@ -1,12 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import styled from "styled-components";
 
-import {
-  addItemToEntry,
-  removeItemFromEntry,
-} from "../../Actions/entriesSlice";
 import { Wrapper, COLORS } from "../StyledComponents";
 
 const EntryItemContainer = styled(Wrapper)`
@@ -21,17 +16,17 @@ export const EntryListItem = ({
   description,
   calories,
   id,
-  addItem,
+  add,
+  remove,
 }) => {
-  const dispatch = useDispatch();
-
   const onAddClick = async (id) => {
-    addItem({ title, description, calories, id });
-    await dispatch(addItemToEntry(id));
+    add({ title, description, calories, id });
+    console.log(`adding item ${title} to cart`);
   };
 
   const onRemoveClick = async (id) => {
-    await dispatch(removeItemFromEntry(id));
+    remove({ title, description, calories, id });
+    console.log(`removing item ${title} from cart`);
   };
 
   return (
@@ -40,13 +35,13 @@ export const EntryListItem = ({
         {title} {calories} kcal
       </span>
       <p>{description}</p>
-      {!!addItem && (
-        <button onClick={(e) => onAddClick(id)}>
+      {!!add && (
+        <button onClick={() => onAddClick(id)}>
           <FiPlus />
         </button>
       )}
-      {!addItem && (
-        <button onClick={(e) => onRemoveClick(id)}>
+      {!remove && (
+        <button onClick={() => onRemoveClick(id)}>
           <FiMinus />
         </button>
       )}
