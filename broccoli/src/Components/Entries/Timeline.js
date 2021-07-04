@@ -12,12 +12,12 @@ export const Timeline = () => {
   const token = useSelector(getToken);
   const ent = useSelector(getEntries);
 
-  useEffect(() => {
-    const res = dispatch(getUserEntries(token));
-    if (res.error) {
-      return;
-    }
-  }, []);
+  // useEffect(() => {
+  //   const res = dispatch(getUserEntries(token));
+  //   if (res.error) {
+  //     return;
+  //   }
+  // }, []);
 
   const elements = ent
     .slice()

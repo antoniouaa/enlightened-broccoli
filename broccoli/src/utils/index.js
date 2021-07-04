@@ -1,3 +1,5 @@
+import { format, formatDistance } from "date-fns";
+
 const dateOptions = { day: "2-digit", month: "long", year: "numeric" };
 
 export const dateFormat = (dateString) =>
@@ -13,6 +15,19 @@ export const dateStringSlashes = (dateString) =>
 export const dayNameFromDate = (dateString) => {
   const date = new Date(dateString);
   return weekLabels[date.getDay()];
+};
+
+export const monthNameFromDate = (dateString) => {
+  const date = new Date(dateString);
+  return monthLabels[date.getMonth()];
+};
+
+export const dateGreeting = (dateString) => {
+  return format(new Date(), "EEEE, 'the' do 'of' MMMM, y");
+};
+
+export const getDifferenceBetweenEntries = (now, latest) => {
+  return formatDistance(latest, now, { addSuffix: true });
 };
 
 export const oneDayTime = 24 * 60 * 60 * 1000;
