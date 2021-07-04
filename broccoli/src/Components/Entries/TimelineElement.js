@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { IoFastFood } from "react-icons/io5";
@@ -8,8 +8,7 @@ import "react-vertical-timeline-component/style.min.css";
 
 import { dateFormat, dayNameFromDate, energyExpenditures } from "../../utils";
 import { COLORS } from "../StyledComponents";
-import { getToken, getUser } from "../../Actions/userSlice";
-import { getEntryItems } from "../../Actions/entriesSlice";
+import { getUser } from "../../Actions/userSlice";
 
 const EntryLink = styled(Link)`
   margin: 0;
@@ -17,25 +16,14 @@ const EntryLink = styled(Link)`
   color: white;
 `;
 
-export const Element = ({ id, created_at, ...rest }) => {
-  const dispatch = useDispatch();
-  const token = useSelector(getToken);
+export const Element = ({ id, created_at, items }) => {
   const userStats = useSelector(getUser);
-  const [entryItems, setEntryItems] = useState([]);
-
-  useEffect(async () => {
-    const items = await dispatch(getEntryItems({ token, id }));
-    if (items.error) return;
-    setEntryItems(items.payload);
-  }, []);
 
   const namedMonth = dateFormat(created_at);
   const dayMonth = dayNameFromDate(created_at);
   const totalCalories =
-    entryItems.length > 0
-      ? entryItems
-          .map((item) => item.calories)
-          .reduce((acc, item) => acc + item)
+    items.length > 0
+      ? items.map((item) => item.calories).reduce((acc, item) => acc + item)
       : 0;
   return (
     <VerticalTimelineElement
@@ -51,7 +39,7 @@ export const Element = ({ id, created_at, ...rest }) => {
       iconStyle={{ background: COLORS.styledLinkColor, color: "#fff" }}>
       <EntryLink to={`timeline/${id}/edit`}>
         <h3 className='vertical-timeline-element-title'>{dayMonth}</h3>
-        <p>{entryItems.length} items logged</p>
+        <p>{items.length} items logged</p>
         <h4>
           {totalCalories} kcal out of {energyExpenditures(userStats).target}
         </h4>

@@ -33,24 +33,6 @@ export const createEntry = createAsyncThunk("createEntry", async (token) => {
   throw new Error(data.detail);
 });
 
-export const getEntryItems = createAsyncThunk(
-  "getEntryItems",
-  async ({ token, id }) => {
-    const response = await fetch(`/entries/${id}/items`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    if (response.status === 200) {
-      return data;
-    }
-    throw new Error(data.detail);
-  }
-);
-
 export const addItemToEntry = createAsyncThunk(
   "addItemToEntry",
   async ({ items, id, token }) => {
@@ -127,17 +109,6 @@ const entriesSlice = createSlice({
       state.error = action.error;
       state.status = "failed";
     },
-    [getEntryItems.pending]: (state, action) => {
-      state.status = "loading";
-    },
-    [getEntryItems.fulfilled]: (state, action) => {
-      state.status = "succeeded";
-      state.error = "";
-    },
-    [getEntryItems.rejected]: (state, action) => {
-      state.error = action.error;
-      state.status = "failed";
-    },
     [addItemToEntry.pending]: (state, action) => {
       state.status = "loading";
     },
@@ -164,7 +135,7 @@ const entriesSlice = createSlice({
 });
 
 export const getEntries = (state) => state.entries.entries;
-export const getEntryById = (id) => (state) =>
-  state.entries.entries.filter((entry) => entry.id === id);
+export const getItemsByEntryId = (id) => (state) =>
+  state.entries.entries.filter((entry) => entry.id === id)[0].items;
 
 export default entriesSlice.reducer;

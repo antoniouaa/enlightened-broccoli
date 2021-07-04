@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { fetchItems } from "../../Actions/itemsSlice";
-import { addItemToEntry, getEntryItems } from "../../Actions/entriesSlice";
+import { addItemToEntry, getItemsByEntryId } from "../../Actions/entriesSlice";
 import {
   Title,
   Form,
@@ -122,19 +122,11 @@ export const EntryCreate = () => {
 
   const allItems = useSelector(fetchItems);
   const token = useSelector(getToken);
+  const items = useSelector(getItemsByEntryId(Number(id)));
   const [filtered, setFiltered] = useState([]);
-  const [addedItems, setAddedItems] = useState([]);
+  const [addedItems, setAddedItems] = useState(items);
 
   const appendItem = (item) => setAddedItems([...addedItems, item]);
-
-  useEffect(() => {
-    async function addAndFilterItems() {
-      const res = await dispatch(getEntryItems({ token, id }));
-      if (res.error) return;
-      setAddedItems(res.payload || []);
-    }
-    addAndFilterItems();
-  }, []);
 
   const onUserInput = (e) => {
     setFiltered(allItems.filter((item) => item.title.includes(e.target.value)));
