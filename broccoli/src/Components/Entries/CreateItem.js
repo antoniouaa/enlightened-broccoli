@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import { addItem, getItems } from "../../Actions/itemsSlice";
+import { addItem } from "../../Actions/itemsSlice";
 import { getToken } from "../../Actions/userSlice";
 import {
   Wrapper,

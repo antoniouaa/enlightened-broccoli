@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import { getItems } from "../Actions/itemsSlice";
 import { loginUser } from "../Actions/userSlice";
-import { getUserEntries } from "../Actions/entriesSlice";
 import {
   Container,
   Wrapper,

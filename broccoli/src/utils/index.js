@@ -1,9 +1,11 @@
 import { format, formatDistance } from "date-fns";
 
-const dateOptions = { day: "2-digit", month: "long", year: "numeric" };
-
 export const dateFormat = (dateString) =>
-  new Intl.DateTimeFormat("en-GB", dateOptions).format(Date.parse(dateString));
+  new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(Date.parse(dateString));
 
 export const dateStringSlashes = (dateString) =>
   new Intl.DateTimeFormat("en-GB", {
@@ -20,6 +22,10 @@ export const dayNameFromDate = (dateString) => {
 export const monthNameFromDate = (dateString) => {
   const date = new Date(dateString);
   return monthLabels[date.getMonth()];
+};
+
+export const getTime = (dateString) => {
+  return format(Date.parse(dateString), "EEEE 'at' kk:mm");
 };
 
 export const dateGreeting = (dateString) => {

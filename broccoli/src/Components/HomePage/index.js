@@ -12,7 +12,6 @@ import {
 } from "../../Actions/entriesSlice";
 import {
   Container,
-  Wrapper,
   StyledLink,
   WrapIcon,
   BroccoliImg as Image,

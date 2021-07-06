@@ -126,12 +126,19 @@ export const EntryCreate = () => {
   const [filtered, setFiltered] = useState([]);
   const [addedItems, setAddedItems] = useState(items);
 
+  // TODO: FIX THIS MESS
   const appendItem = (item) => setAddedItems([...addedItems, item]);
   const removeItem = (item) =>
     setAddedItems(addedItems.filter((i) => i.id !== item.id));
 
   const onUserInput = (e) => {
-    setFiltered(allItems.filter((item) => item.title.includes(e.target.value)));
+    if (e.target.value === "") {
+      setFiltered([]);
+    } else {
+      setFiltered(
+        allItems.filter((item) => item.title.includes(e.target.value))
+      );
+    }
   };
 
   const onFormSubmit = async (e) => {
@@ -158,7 +165,7 @@ export const EntryCreate = () => {
       <AddedItems>
         {addedItems.length > 0 && `Today's Items (${totalCalories}kcal)`}
         {addedItems.map((i, key) => (
-          <EntryListItem key={key} {...i} />
+          <EntryListItem key={key} {...i} remove={removeItem} />
         ))}
       </AddedItems>
       <EntryFormWrapper>
@@ -177,9 +184,9 @@ export const EntryCreate = () => {
             {filtered.map((item, key) => (
               <EntryListItem
                 key={key}
+                {...item}
                 add={appendItem}
                 remove={removeItem}
-                {...item}
               />
             ))}
           </FilterList>
