@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 
+from broccoli import operations
 from broccoli.db import get_db
 from broccoli.schemas import User
 
@@ -40,11 +41,8 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-from broccoli.operations import get_user_by_username
-
-
 def authenticate_user(db: Session, username: str, password: str):
-    db_user = get_user_by_username(db, username=username)
+    db_user = operations.get_user_by_username(db, username=username)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User does not exist")
     if not verify_password(password, db_user.hashed_password):
@@ -76,7 +74,7 @@ async def get_current_user(
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_error
-    user = get_user_by_username(db, username=token_data.username)
+    user = operations.get_user_by_username(db, username=token_data.username)
     if user is None:
         raise credentials_error
     return user

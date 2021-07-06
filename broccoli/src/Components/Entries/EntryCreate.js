@@ -126,7 +126,6 @@ export const EntryCreate = () => {
   const [filtered, setFiltered] = useState([]);
   const [addedItems, setAddedItems] = useState(items);
 
-  // TODO: FIX THIS MESS
   const appendItem = (item) => setAddedItems([...addedItems, item]);
   const removeItem = (item) =>
     setAddedItems(addedItems.filter((i) => i.id !== item.id));

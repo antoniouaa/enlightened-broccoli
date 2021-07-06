@@ -1,4 +1,3 @@
-from broccoli.security import get_current_user
 from typing import List
 
 from sqlalchemy.orm import Session
@@ -44,14 +43,3 @@ async def update_entry(
     entry_id = entry_updates.entry_id
     items = entry_updates.items
     operations.update_entry(db, entry_id=entry_id, items=items)
-
-
-@router.get("/{entry_id}/items", response_model=List[schemas.Item], status_code=200)
-async def get_items_by_entry_id(
-    entry_id: int,
-    db: Session = Depends(get_db),
-    user: schemas.User = Depends(get_current_user),
-):
-    if user:
-        return operations.get_items_by_entry_id(db, entry_id=entry_id)
-    raise HTTPException(status_code=401, detail="You are not logged in")

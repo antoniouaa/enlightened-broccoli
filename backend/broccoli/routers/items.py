@@ -1,4 +1,3 @@
-from broccoli.security import get_current_user
 from typing import List
 
 from sqlalchemy.orm import Session

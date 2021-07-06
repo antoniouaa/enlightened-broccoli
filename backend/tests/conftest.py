@@ -1,17 +1,18 @@
-import dotenv
 import os
 
-dotenv.load_dotenv()
-
 import pytest
-from fastapi.testclient import TestClient
+import dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import IntegrityError
+from fastapi.testclient import TestClient
 
 from broccoli import create_app
 from broccoli.db import get_db
 from broccoli.models import Base, User, Entry
 from broccoli.security import get_current_user
+
+dotenv.load_dotenv()
 
 
 @pytest.fixture(scope="function")
@@ -52,15 +53,6 @@ def test_users():
     ]
 
 
-@pytest.fixture(scope="function")
-def db_user():
-    return {
-        "username": "antoniouaa",
-        "email": "antoniouaa@hotmail.com",
-        "hashed_password": "some_hashed_string",
-    }
-
-
 SQLALCHEMY_DATABASE_URL = os.getenv("TEST_DB_CONNECTION")
 test_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
@@ -84,15 +76,16 @@ def override_get_db():
     test_db = TestSessionLocal()
     try:
         user = override_get_current_user()
-        print(user.id)
+        test_db.add(user)
+
+        entry = Entry(user_id=1)
+        user.entries.append(entry)
+
         test_db.add(user)
         test_db.commit()
-        test_db.refresh(user)
 
-        test_db.add(Entry(user_id=user.id))
-        test_db.commit()
         yield test_db
-    except:
+    except IntegrityError:
         test_db = TestSessionLocal()
         yield test_db
     finally:
@@ -100,7 +93,6 @@ def override_get_db():
 
 
 app = create_app()
-Base.metadata.create_all(bind=test_engine)
 
 
 @pytest.fixture(scope="function")
