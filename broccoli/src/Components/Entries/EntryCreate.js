@@ -4,7 +4,11 @@ import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { fetchItems } from "../../Actions/itemsSlice";
-import { addItemToEntry, getItemsByEntryId } from "../../Actions/entriesSlice";
+import {
+  patchEntry,
+  getItemsByEntryId,
+  getUserEntries,
+} from "../../Actions/entriesSlice";
 import {
   Title,
   Form,
@@ -16,7 +20,6 @@ import {
   StyledLink,
 } from "../StyledComponents";
 import { EntryListItem } from "./EntryDetails";
-import { getToken } from "../../Actions/userSlice";
 
 const CreateWrapper = styled(Container)`
   display: flex;
@@ -121,15 +124,22 @@ export const EntryCreate = () => {
   const { id } = useParams();
 
   const allItems = useSelector(fetchItems);
-  const token = useSelector(getToken);
   const items = useSelector(getItemsByEntryId(Number(id)));
   const [filtered, setFiltered] = useState([]);
   const [addedItems, setAddedItems] = useState(items);
 
-  const appendItem = (item) => setAddedItems([...addedItems, item]);
-  const removeItem = (item) =>
-    setAddedItems(addedItems.filter((i) => i.id !== item.id));
-
+  const appendItem = (key) => {
+    const item = allItems[key];
+    setAddedItems([...addedItems, item]);
+    dispatch(patchEntry({ item_id: item.id, id, action: "add" }));
+    dispatch(getUserEntries());
+  };
+  const removeItem = (key) => {
+    const item = allItems[key];
+    setAddedItems(addedItems.filter((_, index) => key !== index));
+    dispatch(patchEntry({ item_id: item.id, id, action: "remove" }));
+    dispatch(getUserEntries());
+  };
   const onUserInput = (e) => {
     if (e.target.value === "") {
       setFiltered([]);
@@ -142,10 +152,6 @@ export const EntryCreate = () => {
 
   const onFormSubmit = async (e) => {
     if (addedItems.length > 0) {
-      const res = await dispatch(
-        addItemToEntry({ items: addedItems, token, id })
-      );
-      if (res.error) return;
       alert("Items added!");
     } else {
       alert("Items not added!");
@@ -164,7 +170,7 @@ export const EntryCreate = () => {
       <AddedItems>
         {addedItems.length > 0 && `Today's Items (${totalCalories}kcal)`}
         {addedItems.map((i, key) => (
-          <EntryListItem key={key} {...i} remove={removeItem} />
+          <EntryListItem key={key} {...i} remove={() => removeItem(key)} />
         ))}
       </AddedItems>
       <EntryFormWrapper>
@@ -181,12 +187,7 @@ export const EntryCreate = () => {
           <ItemCreate history={history} />
           <FilterList>
             {filtered.map((item, key) => (
-              <EntryListItem
-                key={key}
-                {...item}
-                add={appendItem}
-                remove={removeItem}
-              />
+              <EntryListItem key={key} {...item} add={() => appendItem(key)} />
             ))}
           </FilterList>
         </EntryForm>

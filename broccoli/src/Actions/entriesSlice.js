@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getUserEntries = createAsyncThunk(
   "getUserEntries",
-  async (token) => {
+  async (_, { getState }) => {
+    const token = getState().user.user.token;
     const response = await fetch(`/entries/`, {
       method: "GET",
       headers: {
@@ -18,45 +19,29 @@ export const getUserEntries = createAsyncThunk(
   }
 );
 
-export const createEntry = createAsyncThunk("createEntry", async (token) => {
-  const response = await fetch("/entries/", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await response.json();
-  if (response.status === 201) {
-    return data;
-  }
-  throw new Error(data.detail);
-});
-
-export const addItemToEntry = createAsyncThunk(
-  "addItemToEntry",
-  async ({ items, id, token }) => {
-    const response = await fetch(`/entries/`, {
-      method: "PATCH",
+export const createEntry = createAsyncThunk(
+  "createEntry",
+  async (_, { getState }) => {
+    const token = getState().user.user.token;
+    const response = await fetch("/entries/", {
+      method: "POST",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        items: items.map((item) => item.id),
-        entry_id: id,
-      }),
     });
-    if (response.status !== 204) {
-      const data = await response.json();
-      throw new Error(data.detail);
+    const data = await response.json();
+    if (response.status === 201) {
+      return data;
     }
+    throw new Error(data.detail);
   }
 );
 
-export const removeItemFromEntry = createAsyncThunk(
-  "removeItemFromEntry",
-  async ({ item_id, id, token }) => {
+export const patchEntry = createAsyncThunk(
+  "patchEntry",
+  async ({ item_id, id, action }, { getState }) => {
+    const token = getState().user.user.token;
     const response = await fetch(`/entries/`, {
       method: "PATCH",
       headers: {
@@ -66,13 +51,13 @@ export const removeItemFromEntry = createAsyncThunk(
       body: JSON.stringify({
         item_id,
         entry_id: id,
+        action,
       }),
     });
-    const data = await response.json();
-    if (response.status === 204) {
-      return item_id;
+    if (response.status !== 204) {
+      const data = await response.json();
+      throw new Error(data.detail);
     }
-    throw new Error(data.detail);
   }
 );
 
@@ -109,25 +94,14 @@ const entriesSlice = createSlice({
       state.error = action.error;
       state.status = "failed";
     },
-    [addItemToEntry.pending]: (state, action) => {
+    [patchEntry.pending]: (state, action) => {
       state.status = "loading";
     },
-    [addItemToEntry.fulfilled]: (state, action) => {
+    [patchEntry.fulfilled]: (state, action) => {
       state.status = "succeeded";
       state.error = "";
     },
-    [addItemToEntry.rejected]: (state, action) => {
-      state.status = "failed";
-      state.error = action.error;
-    },
-    [removeItemFromEntry.pending]: (state, action) => {
-      state.status = "loading";
-    },
-    [removeItemFromEntry.fulfilled]: (state, action) => {
-      state.status = "succeeded";
-      state.error = "failed";
-    },
-    [removeItemFromEntry.rejected]: (state, action) => {
+    [patchEntry.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error;
     },

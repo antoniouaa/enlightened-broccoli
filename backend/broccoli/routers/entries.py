@@ -41,5 +41,6 @@ async def update_entry(
         raise HTTPException(status_code=401, detail="You are not logged in")
 
     entry_id = entry_updates.entry_id
-    items = entry_updates.items
-    operations.update_entry(db, entry_id=entry_id, items=items)
+    item_id = entry_updates.item_id
+    action = entry_updates.action
+    operations.update_entry(db, entry_id=entry_id, item_id=item_id, action=action)

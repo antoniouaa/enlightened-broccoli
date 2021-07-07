@@ -30,9 +30,15 @@ class EntryCreate(EntryBase):
     ...
 
 
+class PatchAction(str, Enum):
+    add = "add"
+    remove = "remove"
+
+
 class EntryPatch(BaseModel):
     entry_id: int
-    items: List[int]
+    item_id: int
+    action: PatchAction
 
 
 class Entry(EntryBase):

@@ -48,11 +48,10 @@ const AddEntryLink = styled(StyledLink)`
 export const AuthedHome = ({ user }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const token = useSelector(getToken);
   const entries = useSelector(getEntries);
 
   useEffect(() => {
-    const res = dispatch(getUserEntries(token));
+    const res = dispatch(getUserEntries());
     if (res.error) {
       return;
     }
@@ -80,7 +79,7 @@ export const AuthedHome = ({ user }) => {
         )}
         <AddEntryLink
           onClick={async () => {
-            const res = await dispatch(createEntry(token));
+            const res = await dispatch(createEntry());
             if (res.error) {
               return;
             }

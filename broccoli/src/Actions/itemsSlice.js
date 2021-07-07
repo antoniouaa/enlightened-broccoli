@@ -14,21 +14,25 @@ export const getItems = createAsyncThunk("getItems", async () => {
   throw new Error(data.detail);
 });
 
-export const addItem = createAsyncThunk("addItem", async ({ token, item }) => {
-  const response = await fetch(`/items/`, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${token}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(item),
-  });
-  const data = await response.json();
-  if (response.status === 201) {
-    return data;
+export const addItem = createAsyncThunk(
+  "addItem",
+  async ({ item }, { getState }) => {
+    const token = getState().user.user.token;
+    const response = await fetch(`/items/`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+    const data = await response.json();
+    if (response.status === 201) {
+      return data;
+    }
+    throw new Error(data.detail);
   }
-  throw new Error(data.detail);
-});
+);
 
 const itemsSlice = createSlice({
   name: "items",

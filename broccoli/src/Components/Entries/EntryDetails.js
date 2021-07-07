@@ -18,12 +18,8 @@ export const EntryListItem = ({
   id,
   add,
   remove,
-  ...rest
 }) => {
   const onAddClick = async (id) => {
-    console.log("remove", remove);
-    console.log("rest", rest);
-
     add({ title, description, calories, id });
     console.log(`adding item ${title} to cart`);
   };

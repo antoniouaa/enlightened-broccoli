@@ -58,7 +58,7 @@ export const CreateItem = () => {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     if (Boolean(item.title) && Boolean(item.calories)) {
-      await dispatch(addItem({ token, item }));
+      await dispatch(addItem({ item }));
       setTimeout(() => {
         history.push("/timeline");
       }, 1000);
