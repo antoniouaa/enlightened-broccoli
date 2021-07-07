@@ -52,6 +52,7 @@ def delete_item(db: Session, item_id: int):
 
 
 def get_entries(db: Session, user: schemas.User, skip: int = 0, limit: int = 100):
+    prune_empty_entries(db, user)
     return (
         db.query(models.Entry)
         .filter(models.Entry.user_id == user.id)
@@ -73,14 +74,26 @@ def create_entry(db: Session, user: schemas.User):
     return db_entry
 
 
+def prune_empty_entries(db: Session, user: schemas.User):
+    entries = db.query(models.User).filter_by(username=user.username).first().entries
+    for entry in entries:
+        if len(entry.items) == 0:
+            db.delete(entry)
+    db.commit()
+
+
 def update_entry(db: Session, entry_id: int, item_id: int, action: schemas.PatchAction):
     db_entry = db.query(models.Entry).get(entry_id)
     db_item = db.query(models.Item).filter(models.Item.id == item_id).first()
     if action == "add":
-        db_entry.items.append(db_item)
+        db.execute(
+            "INSERT INTO entry_to_item(entry_id, item_id) VALUES (:entry_id, :item_id);",
+            {"entry_id": entry_id, "item_id": item_id},
+        )
+        # db_entry.items.append(db_item)
     elif action == "remove" and db_item in db_entry.items:
         db_entry.items.remove(db_item)
-    db.add(db_entry)
+    # db.add(db_entry)
     db.commit()
 
 

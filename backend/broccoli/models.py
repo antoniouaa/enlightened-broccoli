@@ -9,6 +9,7 @@ from broccoli.db import Base
 association_table = Table(
     "entry_to_item",
     Base.metadata,
+    Column("id", Integer, primary_key=True),
     Column("entry_id", Integer, ForeignKey("entries.id")),
     Column("item_id", Integer, ForeignKey("items.id")),
 )

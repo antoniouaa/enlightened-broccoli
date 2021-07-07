@@ -13,7 +13,7 @@ export const Timeline = () => {
   const ent = useSelector(getEntries)
     .slice()
     .reverse()
-    .filter((entry) => entry.entryitems.length > 0);
+    .filter((entry) => entry.items.length > 0);
 
   return (
     <Wrapper>
