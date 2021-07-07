@@ -13,3 +13,6 @@
 
 # db stuff
 postgres-data
+
+# migrations
+alembic
