@@ -1,25 +1,41 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { VerticalTimeline } from "react-vertical-timeline-component";
 
-import { getEntries } from "../../Actions/entriesSlice";
-import { Wrapper } from "../StyledComponents";
+import { getEntries, createEntry } from "../../Actions/entriesSlice";
+import { Wrapper, AddEntryLink } from "../StyledComponents";
 import { Element } from "./TimelineElement";
 
 export const Timeline = () => {
-  const ent = useSelector(getEntries);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const ent = useSelector(getEntries)
+    .slice()
+    .reverse()
+    .filter((entry) => entry.entryitems.length > 0);
 
   return (
     <Wrapper>
-      <VerticalTimeline>
-        {ent
-          .slice()
-          .reverse()
-          .filter((entry) => entry.items.length > 0)
-          .map((entry) => (
+      {ent.length > 0 ? (
+        <VerticalTimeline>
+          {ent.map((entry) => (
             <Element key={entry.id} {...entry} />
           ))}
-      </VerticalTimeline>
+        </VerticalTimeline>
+      ) : (
+        <AddEntryLink
+          onClick={async () => {
+            const res = await dispatch(createEntry());
+            if (res.error) {
+              return;
+            }
+            const { id } = res.payload;
+            history.push(`/timeline/${id}/edit`);
+          }}>
+          Add an entry?
+        </AddEntryLink>
+      )}
     </Wrapper>
   );
 };

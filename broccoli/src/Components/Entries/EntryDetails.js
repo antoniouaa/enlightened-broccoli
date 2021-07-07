@@ -19,14 +19,12 @@ export const EntryListItem = ({
   add,
   remove,
 }) => {
-  const onAddClick = async (id) => {
+  const onAddClick = (id) => {
     add({ title, description, calories, id });
-    console.log(`adding item ${title} to cart`);
   };
 
-  const onRemoveClick = async (id) => {
+  const onRemoveClick = (id) => {
     remove({ title, description, calories, id });
-    console.log(`removing item ${title} from cart`);
   };
 
   return (
@@ -40,7 +38,7 @@ export const EntryListItem = ({
           <FiPlus />
         </button>
       )}
-      {remove && (
+      {!!remove && (
         <button onClick={() => onRemoveClick(id)}>
           <FiMinus />
         </button>

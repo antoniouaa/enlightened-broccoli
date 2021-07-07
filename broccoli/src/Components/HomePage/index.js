@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import Rice from "../../Assets/rice.png";
-import { getToken, getUser, isUserLoggedIn } from "../../Actions/userSlice";
+import { getUser, isUserLoggedIn } from "../../Actions/userSlice";
 import {
   createEntry,
   getEntries,
@@ -12,7 +12,7 @@ import {
 } from "../../Actions/entriesSlice";
 import {
   Container,
-  StyledLink,
+  AddEntryLink,
   WrapIcon,
   BroccoliImg as Image,
   COLORS,
@@ -39,10 +39,6 @@ const WelcomeWrapper = styled.div`
   & > h3 {
     font-size: 26px;
   }
-`;
-
-const AddEntryLink = styled(StyledLink)`
-  font-size: 26px;
 `;
 
 export const AuthedHome = ({ user }) => {

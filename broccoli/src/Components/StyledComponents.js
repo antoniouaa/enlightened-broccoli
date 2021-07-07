@@ -144,3 +144,7 @@ export const BroccoliImg = styled.img`
     display: none;
   }
 `;
+
+export const AddEntryLink = styled(StyledLink)`
+  font-size: 26px;
+`;

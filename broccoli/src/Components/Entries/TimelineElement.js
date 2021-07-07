@@ -16,14 +16,16 @@ const EntryLink = styled(Link)`
   color: white;
 `;
 
-export const Element = ({ id, created_at, items }) => {
+export const Element = ({ id, created_at, entryitems }) => {
   const userStats = useSelector(getUser);
 
   const namedMonth = dateFormat(created_at);
   const dayTime = getTime(created_at);
   const totalCalories =
-    items.length > 0
-      ? items.map((item) => item.calories).reduce((acc, item) => acc + item)
+    entryitems.length > 0
+      ? entryitems
+          .map((item) => item.calories)
+          .reduce((acc, item) => acc + item)
       : 0;
 
   return (
@@ -40,7 +42,7 @@ export const Element = ({ id, created_at, items }) => {
       iconStyle={{ background: COLORS.styledLinkColor, color: "#fff" }}>
       <EntryLink to={`timeline/${id}/edit`}>
         <h3 className='vertical-timeline-element-title'>{dayTime}</h3>
-        <p>{items.length} items logged</p>
+        <p>{entryitems.length} items logged</p>
         <h4>
           {totalCalories} kcal out of {energyExpenditures(userStats).target}
         </h4>

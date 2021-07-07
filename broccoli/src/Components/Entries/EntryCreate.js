@@ -128,15 +128,15 @@ export const EntryCreate = () => {
   const [filtered, setFiltered] = useState([]);
   const [addedItems, setAddedItems] = useState(items);
 
-  const appendItem = (item) => {
+  const appendItem = async (item) => {
     setAddedItems([...addedItems, item]);
-    dispatch(patchEntry({ item_id: item.id, id, action: "add" }));
-    dispatch(getUserEntries());
+    await dispatch(patchEntry({ item_id: item.id, id, action: "add" }));
+    await dispatch(getUserEntries());
   };
-  const removeItem = (item) => {
+  const removeItem = async (item) => {
     setAddedItems(addedItems.filter((i) => i !== item));
-    dispatch(patchEntry({ item_id: item.id, id, action: "remove" }));
-    dispatch(getUserEntries());
+    await dispatch(patchEntry({ item_id: item.id, id, action: "remove" }));
+    await dispatch(getUserEntries());
   };
   const onUserInput = (e) => {
     if (e.target.value === "") {
