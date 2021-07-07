@@ -88,3 +88,9 @@ class User(UserBase):
     class Config:
         orm_mode = True
         use_enum_values = True
+
+
+class Contact(BaseModel):
+    full_name: StrictStr
+    email: StrictStr
+    message: StrictStr

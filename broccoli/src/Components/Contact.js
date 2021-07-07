@@ -12,6 +12,7 @@ import {
   Input,
 } from "./StyledComponents";
 import Broccoli from "../Assets/broccoli.png";
+import { SendMail } from "../Actions/contact";
 
 const WrapIconText = styled.div`
   margin-right: 3rem;
@@ -85,13 +86,13 @@ export const Contact = () => {
     message: "",
   });
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
     alert("Thank you for your message, we will get back to you shortly!");
-    setFormDetails({ fullName: "", email: "", message: "" });
+    await SendMail(formDetails);
     setTimeout(() => {
       history.push("/");
-    }, 1000);
+    }, 200);
   };
 
   return (

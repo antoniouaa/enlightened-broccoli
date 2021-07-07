@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from broccoli.db import engine
 from broccoli.models import Base
-from broccoli.routers import items, users, entries
+from broccoli.routers import items, users, entries, contact
 
 Base.metadata.create_all(bind=engine)
 
@@ -33,5 +33,6 @@ def create_app():
     app.include_router(items.router, tags=["items"], prefix="/items")
     app.include_router(users.router, tags=["users"], prefix="/users")
     app.include_router(entries.router, tags=["entries"], prefix="/entries")
+    app.include_router(contact.router, tags=["contact"], prefix="/contact")
 
     return app
