@@ -128,15 +128,13 @@ export const EntryCreate = () => {
   const [filtered, setFiltered] = useState([]);
   const [addedItems, setAddedItems] = useState(items);
 
-  const appendItem = (key) => {
-    const item = allItems[key];
+  const appendItem = (item) => {
     setAddedItems([...addedItems, item]);
     dispatch(patchEntry({ item_id: item.id, id, action: "add" }));
     dispatch(getUserEntries());
   };
-  const removeItem = (key) => {
-    const item = allItems[key];
-    setAddedItems(addedItems.filter((_, index) => key !== index));
+  const removeItem = (item) => {
+    setAddedItems(addedItems.filter((i) => i !== item));
     dispatch(patchEntry({ item_id: item.id, id, action: "remove" }));
     dispatch(getUserEntries());
   };
@@ -169,8 +167,8 @@ export const EntryCreate = () => {
     <CreateWrapper>
       <AddedItems>
         {addedItems.length > 0 && `Today's Items (${totalCalories}kcal)`}
-        {addedItems.map((i, key) => (
-          <EntryListItem key={key} {...i} remove={() => removeItem(key)} />
+        {addedItems.map((item, key) => (
+          <EntryListItem key={key} {...item} remove={() => removeItem(item)} />
         ))}
       </AddedItems>
       <EntryFormWrapper>
@@ -187,7 +185,7 @@ export const EntryCreate = () => {
           <ItemCreate history={history} />
           <FilterList>
             {filtered.map((item, key) => (
-              <EntryListItem key={key} {...item} add={() => appendItem(key)} />
+              <EntryListItem key={key} {...item} add={() => appendItem(item)} />
             ))}
           </FilterList>
         </EntryForm>

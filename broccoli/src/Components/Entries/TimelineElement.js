@@ -25,6 +25,7 @@ export const Element = ({ id, created_at, items }) => {
     items.length > 0
       ? items.map((item) => item.calories).reduce((acc, item) => acc + item)
       : 0;
+
   return (
     <VerticalTimelineElement
       className='vertical-timeline-element--work'

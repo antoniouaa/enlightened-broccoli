@@ -15,6 +15,7 @@ export const Timeline = () => {
         {ent
           .slice()
           .reverse()
+          .filter((entry) => entry.items.length > 0)
           .map((entry) => (
             <Element key={entry.id} {...entry} />
           ))}
