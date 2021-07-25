@@ -6,6 +6,13 @@ from sqlalchemy.sql.schema import ForeignKey, Table
 from broccoli.db import Base
 
 
+# TODO: Allow duplicates in database
+# So far duplicates are not allowed in the database
+# even though their model has a primary key to
+# uniquely identify them.
+# This is a test to see if it updates
+
+
 association_table = Table(
     "entry_to_item",
     Base.metadata,
